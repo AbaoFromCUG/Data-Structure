@@ -1,0 +1,8 @@
+{
+    "editor.fontSize": 16,
+    "files.exclude": {
+        "*.metadata": true, 
+        "*.settings": true,        
+        "*.pyc": true 
+    }  
+}

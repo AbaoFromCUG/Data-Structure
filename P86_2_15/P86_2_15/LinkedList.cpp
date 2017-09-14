@@ -123,11 +123,10 @@ bool LinkedList::sortJ()
 	线形排序、归并排序的辅助空间为O(n),快速排序的辅助空间为O(logn),其它排序的辅助空间为O(1)。
 	
 	*/
-	Item* m = head;	//用来移动比较的指针
+	Item* m = head->link;	//用来移动比较的指针
 	Item* max = head;		//用来保存当前最大Item  的前一个Item的指针
 	Item* last = head;	//用来指向新的链表的末尾
-	//冒泡排序
-	//因为当只有一个没有比较时，不需要比较
+	
 	for (int j = 0; j < size - 1; j++) {
 		while (m->link!=NULL)
 		{
@@ -137,17 +136,21 @@ bool LinkedList::sortJ()
 			}
 			m = m->link;
 		}
+		
 		//开始交换
 		/*
 		步骤说明，last 后移一步，max后移一步，用中间值移动节点四步
 		*/
-		Item* aa = last->link; //不要丢了last后面没排序
-		last->link = max->link;	//把搜索到的最大的值加到last后面
-		max->link = last->link->link;	//把最大值的后项连接到最大值前项上
-		last->link->link = aa;
+		if (last != max) {
+			Item* aa = last->link; //不要丢了last后面没排序
+			last->link = max->link;	//把搜索到的最大的值加到last后面
+			max->link = last->link->link;	//把最大值的后项连接到最大值前项上
+			last->link->link = aa;
+		}
 		last = last->link;
-		max = last->link;
-
+		max = last;
+		m = last->link;
+		
 	}
 	//enenenenen
 	last->link->link = NULL;
@@ -170,16 +173,15 @@ bool LinkedList::sortZ()
 			}
 			m = m->link;
 		}
-		//开始交换
-		/*
-		步骤说明，last 后移一步，max后移一步，用中间值移动节点四步
-		*/
-		Item* aa = last->link; //不要丢了last后面没排序
-		last->link = min->link;	//把搜索到的最大的值加到last后面
-		min->link = last->link->link;	//把最大值的后项连接到最大值前项上
-		last->link->link = aa;
+		if (last != min) {
+			Item* aa = last->link; //不要丢了last后面没排序
+			last->link = min->link;	//把搜索到的最大的值加到last后面
+			min->link = last->link->link;	//把最大值的后项连接到最大值前项上
+			last->link->link = aa;
+		}
 		last = last->link;
-		min = last->link;
+		min = last;
+		m = last->link;
 
 	}
 	//enenenenen
