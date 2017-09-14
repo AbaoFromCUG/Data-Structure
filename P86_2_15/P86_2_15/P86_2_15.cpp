@@ -11,27 +11,33 @@ void fun() {
 	SuperList<int> list;
 	list.append(1);
 	list.append(12);
+	list.append(1);
 	list.append(123);
-	list.append(1234);
-	list.append(12345);
-	list.append(123456);
+	list.append(12);
+	list.append(126);
+	list.append(120);
+	
+	cout << "《-----原来的序列---->" << endl;
 	list.output();
+
 	list.sort([](int x, int y)->bool {
 		return x < y;
 	});
+	cout << "《-----全部排序后的序列---->" << endl;
 	list.output();
 
-	return;
-	cout << "《--------->" << endl;
-	list.sort(2,4,[](int x, int y)->bool {
-		return x < y;
-	});
-	list.output();
-	cout << "《--------->" << endl;
-	list.sort(2, 4, [](int x, int y)->bool {
+	list.sort(2,-1,[](int x, int y)->bool {
 		return x > y;
 	});
+	cout << "《----2，5排序后----->" << endl;
+	
 	list.output();
+	list.sort(2, 6, [](int x, int y)->bool {
+		return x < y;
+	});
+	cout << "《----2，5反序后----->" << endl;
+	list.output();
+	
 }
 
 
@@ -61,13 +67,7 @@ void fun2() {
 
 int main()
 {
-	//fun();
-	//cout <<"<----------------------------------------------------->"<< endl;
-
-	fun3();
-
-	/*
-	*/
+	fun();
 	std::system("pause");
 
 	return 0;

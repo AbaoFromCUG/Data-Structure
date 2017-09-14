@@ -88,6 +88,7 @@ template<typename T>
 inline T & SuperList<T>::remove(int index)
 {
 	// TODO: 在此处插入 return 语句
+	
 }
 
 template<typename T>
@@ -98,15 +99,16 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		throw" 越界非法";
 
 	}
-	else if (begin>end&&end!=-1)
+	else if (end == -1)
+	{
+		end = size;
+	}
+	else if (begin>end)
 	{
 		//排序前不可以大于排序后
 		throw" 非法";
 	}
-	else if (end==-1)
-	{
-		end = size;
-	}
+	
 	else if ((end-begin)<=1&&(end - begin) >= 0)
 	{
 		return;
@@ -127,35 +129,37 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		i++;
 		endNode = endNode->link;
 	}
-	std::cout << beginNode->date << "-----" << endNode->date << endl;
 	
 
-	//start;endNode = endNode->link;
+	//start;
+	cout << beginNode->date << "-------" << endNode->date << endl;
+	endNode = endNode->link;
 	
-	ListNode<T>* m = beginNode->link;	//用来移动比较的指针
-	ListNode<T>* min = beginNode->link->link;		//用来保存当前小ListNode<T>的前一个ListNode<T>的指针
-	ListNode<T>* l = beginNode;	//用来指向新的链表的末尾
-	for (int j = 0; j <end-begin-1; j++) {
-		while (m->link != NULL)
+	ListNode<T>* l = beginNode;
+	ListNode<T>* move = beginNode->link;	//
+	ListNode<T>* miax = beginNode;//极值
+	
+	for (int j = 0; j < end - begin - 1; j++) {
+		while (move->link&&move->link!=endNode)
 		{
-			if (func(m->link->date, min->link->date))
-			{
-				min = m;
+			if (func(move->link->date, miax->link->date)) {
+				miax = move;
 			}
-			m = m->link;
+			move = move->link;
 		}
-		if (l != min) {
+		if (l != miax) {
 			ListNode<T>* aa = l->link; //不要丢了l后面没排序
-			l->link = min->link;	//把搜索到的最大的值加到l后面
-			min->link = l->link->link;	//把最大值的后项连接到最大值前项上
+			l->link = miax->link;	//把搜索到的最大的值加到l后面
+			miax->link = l->link->link;	//把最大值的后项连接到最大值前项上
 			l->link->link = aa;
 		}
 		l = l->link;
-		min = l;
-		m = l->link;
+		miax = l;
+		move = l->link;
 	}
-	//enenenenen
 	l->link->link = endNode;
+
+	
 }
 
 template<typename T>
