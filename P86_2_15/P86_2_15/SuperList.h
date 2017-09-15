@@ -11,7 +11,8 @@ struct ListNode {
 		link = NULL;
 	}
 	ListNode(const T &item, ListNode<T> *ptr = NULL) {
-
+		date = item;
+		link = ptr;
 	}
 	ListNode* link;
 	
@@ -24,18 +25,24 @@ class SuperList
 public:
 	SuperList();
 	virtual ~SuperList();
-	bool append(T t);
-	bool insertBefore(int index,T&t);		//在第index节点前面插入
-	bool insertAfter(int index,T&t);			//在第index个节点后面插入
+	bool prepend(T t);		//在头上插入
+	bool append(T t);		//在尾部追加
+	bool insertBefore(int index,T 
+		t);		//在第index节点前面插入
+	bool insertAfter(int index,T t);			//在第index个节点后面插入
 	void makeEmpty();						//清空链表，保存头节点
 	T& remove(int index);			//删除第index个节点index>=0，返回值T
 	void sort(int begin,int end , bool (*func)(T a,T b));
 	void sort(bool(*func)(T a, T b));
 	
-
+	SuperList<T>& operator<<(T t);
 	int getSize();
+	//归并？，
+	void merge(SuperList<T>& t);		//两条递增合并为递减	
+	void reverse();						//逆置
 	
-	
+	ListNode<T>* locate(int index);
+
 	//
 	void output();
 protected:
@@ -56,6 +63,19 @@ inline SuperList<T>::SuperList()
 template<typename T>
 inline SuperList<T>::~SuperList()
 {
+	makeEmpty();
+	delete first;
+	first = NULL;
+}
+
+template<typename T>
+inline bool SuperList<T>::prepend(T t)
+{
+	ListNode<T> newNode = new ListNode<T>(t);
+	newNode.link = first->link;
+	first->link = newNode;	
+	size++;
+	return true ;
 }
 
 template<typename T>
@@ -68,27 +88,67 @@ inline bool SuperList<T>::append(T  t)
 }
 
 template<typename T>
-inline bool SuperList<T>::insertBefore(int index, T & t)
+inline bool SuperList<T>::insertBefore(int index, T  t)
 {
-	return false;
+	if (index >= size || index<0) {
+		//非法越界
+		throw "越界了哦";
+		return false;
+	}
+	else
+	{
+		ListNode<T>* n = locate(index-1); //前驱
+		ListNode<T>* newItem = new ListNode<T>(t, n->link);
+		n->link = newItem;		   //前驱保存的link指向new的Item
+		size++;
+		return true;
+	}
 }
 
 template<typename T>
-inline bool SuperList<T>::insertAfter(int index, T & t)
+inline bool SuperList<T>::insertAfter(int index, T t)
 {
-	return bool();
+	if (index >= size || index<0) {
+		//非法越界
+		return false;
+	}
+	else
+	{
+		ListNode<T>* n = locate(index ); //前驱
+		ListNode<T>* newItem = new ListNode<T>(t, n->link);
+		if (!n->link) {
+			last = newItem;
+		}
+		n->link = newItem;
+		size++;
+		return true;
+	}
 }
 
 template<typename T>
 inline void SuperList<T>::makeEmpty()
 {
+	while (first->link)
+	{
+		ListNode<T>* n = first->link;
+		first->link = first->link->link;
+		delete n;
+		n = NULL;
+	}
 }
 
 template<typename T>
 inline T & SuperList<T>::remove(int index)
 {
 	// TODO: 在此处插入 return 语句
-	
+	size--;
+	ListNode<T>* node = locate(index - 1);
+	ListNode<T>* n = node->link;
+	T t(n->date);
+	node->link = node->link->link;
+	delete n;
+	return t;
+
 }
 
 template<typename T>
@@ -158,6 +218,9 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		move = l->link;
 	}
 	l->link->link = endNode;
+	if (endNode == NULL) {
+		last = l->link;
+	}
 
 	
 }
@@ -190,7 +253,18 @@ inline void SuperList<T>::sort(bool(*func)(T a, T b))
 	}
 	//enenenenen
 	l->link->link = NULL;
+	last = l->link;
 }
+
+template<typename T>
+inline SuperList<T>& SuperList<T>::operator<<(T t)
+{
+	// TODO: 在此处插入 return 语句
+	append(t);
+	return *this;
+}
+
+
 
 template<typename T>
 inline int SuperList<T>::getSize()
@@ -198,16 +272,103 @@ inline int SuperList<T>::getSize()
 	return size;
 }
 
+template<typename T>
+inline void SuperList<T>::merge(SuperList<T>& t)  //两条递增合并为递减
+{
+	// TODO: 在此处插入 return 语句
+
+	ListNode<T>* pa = first->link;
+	ListNode<T>* pb = t.first->link;
+	first->link = NULL;
+	t.first->link = NULL;
+
+	//先确定新的尾节点
+	last = pa->date > pb->date ? pb : pa;
+	while (pa&&pb)
+	{
+		ListNode<T>* node;
+		if (pa->date > pb->date) {
+			node = pb;
+			pb = pb->link;
+		}
+		else
+		{
+			node = pa;
+			pa = pa->link;
+		}
+		node->link = first->link;
+		first->link = node;
+	}
+
+	//此时，必定有一条没有清空
+	ListNode<T>* noNull = pa ? pa : pb;
+	while (noNull)
+	{
+		ListNode<T>* node = noNull;
+		noNull = noNull->link;
+		node->link = first->link;
+		first->link = node;
+	}
+	size += t.size;
+	t.size = 0;
+	t.last = first;
+}
+
+template<typename T>
+inline void SuperList<T>::reverse()
+{
+	last = first->link;  //头变尾部
+	ListNode<T>* node = first->link;	//保存有效链表
+	ListNode<T>* lNode;			//作为中间变量
+	first->link =NULL;	//把fist 截断
+	while (node)
+	{
+		lNode = first->link;
+		first->link = node;
+		node = node->link;	
+		first->link->link = lNode;
+	}
+
+}
+
+template<typename T>
+inline ListNode<T>* SuperList<T>::locate(int index)
+{
+	if (index < -1) {
+		return NULL;	   // i不合理?
+	}
+		
+	ListNode<T> * current = first;  
+	int k = -1;
+	while ( k < index)
+	{
+		current = current->link;  k++;
+	}
+	return current;	    //返回第 i 号结点地址或NULL
+};
+
 
 template<typename T>
 inline void SuperList<T>::output()
 {
 	//这个函数如果要调用，T必须重载流
+
+	if (size == 0) {
+		cout << "这个链表，长度为：" << size << endl;
+		cout << "输出完毕" << endl;
+		return;
+	}
+	//在这里输入各种信息吧
+	cout << "这个链表，长度为：" << size << endl;
+	cout << "头节点的数据为： " << first->link->date << endl;
+	cout << "尾节点的数据为： " << last->date << endl;
+	cout << "各个节点的数据依次遍历为: " ;
 	ListNode<T> *item = first->link;
 	//循环
 	while (item)
 	{
-		std::cout << item->date << std::endl;
+		std::cout << item->date << "--->";
 		item = item->link;
 	}
+	cout << endl;
 }

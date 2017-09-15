@@ -81,8 +81,6 @@ bool LinkedList::insertBefore(int index, const int & data)
 		return true;
 	}
 	
-
-	return false;
 }
 
 bool LinkedList::insertBehind(int index, const int & data)
