@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "LinkedList.h"
 
 
@@ -28,8 +28,8 @@ LinkedList::LinkedList(const LinkedList & old)
 LinkedList::~LinkedList()
 {
 	/*
-		É¾³ıÁ´±íÊ±ºò
-		´ÓÍ·µ½Î²É¾³ı
+		åˆ é™¤é“¾è¡¨æ—¶å€™
+		ä»å¤´åˆ°å°¾åˆ é™¤
 	*/
 	while (head != NULL)
 	{
@@ -66,17 +66,17 @@ bool LinkedList::append(const int & num)
 bool LinkedList::insertBefore(int index, const int & data)
 {
 	if (index > size||index<1) {
-		//·Ç·¨Ô½½ç
+		//éæ³•è¶Šç•Œ
 		return false;
 	}
 	else
 	{
-		Item* n = indexAt(index - 2); //Ç°Çı
-		Item* m = n->link;				//ºóÇı
+		Item* n = indexAt(index - 2); //å‰é©±
+		Item* m = n->link;				//åé©±
 		Item* newItem = new Item;
 		newItem->data = data;
-		n->link = newItem;		   //Ç°Çı±£´æµÄlinkÖ¸ÏònewµÄItem
-		newItem->link = m;			//newItem µÄlinkÖ¸ÏòºóÇı£¬Èç¹ûÃ»ÓĞºóÇı£¬¾ÍÊÇNULL
+		n->link = newItem;		   //å‰é©±ä¿å­˜çš„linkæŒ‡å‘newçš„Item
+		newItem->link = m;			//newItem çš„linkæŒ‡å‘åé©±ï¼Œå¦‚æœæ²¡æœ‰åé©±ï¼Œå°±æ˜¯NULL
 		size++;
 		return true;
 	}
@@ -86,17 +86,17 @@ bool LinkedList::insertBefore(int index, const int & data)
 bool LinkedList::insertBehind(int index, const int & data)
 {
 	if (index > size || index < 1) {
-		//·Ç·¨
+		//éæ³•
 		return false;
 	}
 	else
 	{
-		Item* n = indexAt(index - 1); //Ç°Çı
-		Item* m = n->link;				//ºóÇı
+		Item* n = indexAt(index - 1); //å‰é©±
+		Item* m = n->link;				//åé©±
 		Item* newItem = new Item;
 		newItem->data = data;
-		n->link = newItem;		   //Ç°Çı±£´æµÄlinkÖ¸ÏònewµÄItem
-		newItem->link = m;			//newItem µÄlinkÖ¸ÏòºóÇı£¬Èç¹ûÃ»ÓĞºóÇı£¬¾ÍÊÇNULL
+		n->link = newItem;		   //å‰é©±ä¿å­˜çš„linkæŒ‡å‘newçš„Item
+		newItem->link = m;			//newItem çš„linkæŒ‡å‘åé©±ï¼Œå¦‚æœæ²¡æœ‰åé©±ï¼Œå°±æ˜¯NULL
 		size++;
 		return true;
 	}
@@ -105,25 +105,25 @@ bool LinkedList::insertBehind(int index, const int & data)
 bool LinkedList::sortJ()
 {
 	/*
-	 *´Ë´¦ĞèÒª¶îÍâ3¸ö¿Õ¼ä
-	 *ÆğÖĞÖ¸ÏòĞÂÁ´±íµÄ×îºóÒ»¸öÖ¸Õë±¾À´¿ÉÒÔ¿ÉÒÔÊ¡ÂÔ£¬
-	 *µ«ÊÇÎªÁË½ÚÊ¡Ê±¼ä¸´ÔÓ¶È£¬ËùÒÔÎşÉü¿Õ¼ä
+	 *æ­¤å¤„éœ€è¦é¢å¤–3ä¸ªç©ºé—´
+	 *èµ·ä¸­æŒ‡å‘æ–°é“¾è¡¨çš„æœ€åä¸€ä¸ªæŒ‡é’ˆæœ¬æ¥å¯ä»¥å¯ä»¥çœç•¥ï¼Œ
+	 *ä½†æ˜¯ä¸ºäº†èŠ‚çœæ—¶é—´å¤æ‚åº¦ï¼Œæ‰€ä»¥ç‰ºç‰²ç©ºé—´
 	 */
 	/*
-	²åÈëÅÅĞò¡¢Ã°ÅİÅÅĞò¡¢¶ş²æÊ÷ÅÅĞò¡¢¶şÂ·¹é²¢ÅÅĞò¼°ÆäËûÏßĞÎÅÅĞòÊÇÎÈ¶¨µÄ¡£
-	Ñ¡ÔñÅÅĞò¡¢Ï£¶ûÅÅĞò¡¢¿ìËÙÅÅĞò¡¢¶ÑÅÅĞòÊÇ²»ÎÈ¶¨µÄ¡£
-	[±à¼­] Ê±¼ä¸´ÔÓĞÔ±È½Ï
-	²åÈëÅÅĞò¡¢Ã°ÅİÅÅĞò×îÓÅÎªO(n),×î»µÎªO(n^2),Æ½¾ùO(n^2£©£»
-	¿ìËÙÅÅĞò×îÓÅÎªO(nlogn),×î»µÎªO(n^2),Æ½¾ùO(nlogn);
-	¶ÑÅÅĞò×îÓÅÎªO(nlogn),×î»µÎªO(nlogn),Æ½¾ùO(nlogn);
-	ÏßĞÎÅÅĞòµÄÊ±¼ä¸´ÔÓĞÔÎªO(n)¡£
-	[±à¼­] ¸¨Öú¿Õ¼äµÄ±È½Ï
-	ÏßĞÎÅÅĞò¡¢¹é²¢ÅÅĞòµÄ¸¨Öú¿Õ¼äÎªO(n),¿ìËÙÅÅĞòµÄ¸¨Öú¿Õ¼äÎªO(logn),ÆäËüÅÅĞòµÄ¸¨Öú¿Õ¼äÎªO(1)¡£
+	æ’å…¥æ’åºã€å†’æ³¡æ’åºã€äºŒå‰æ ‘æ’åºã€äºŒè·¯å½’å¹¶æ’åºåŠå…¶ä»–çº¿å½¢æ’åºæ˜¯ç¨³å®šçš„ã€‚
+	é€‰æ‹©æ’åºã€å¸Œå°”æ’åºã€å¿«é€Ÿæ’åºã€å †æ’åºæ˜¯ä¸ç¨³å®šçš„ã€‚
+	[ç¼–è¾‘] æ—¶é—´å¤æ‚æ€§æ¯”è¾ƒ
+	æ’å…¥æ’åºã€å†’æ³¡æ’åºæœ€ä¼˜ä¸ºO(n),æœ€åä¸ºO(n^2),å¹³å‡O(n^2ï¼‰ï¼›
+	å¿«é€Ÿæ’åºæœ€ä¼˜ä¸ºO(nlogn),æœ€åä¸ºO(n^2),å¹³å‡O(nlogn);
+	å †æ’åºæœ€ä¼˜ä¸ºO(nlogn),æœ€åä¸ºO(nlogn),å¹³å‡O(nlogn);
+	çº¿å½¢æ’åºçš„æ—¶é—´å¤æ‚æ€§ä¸ºO(n)ã€‚
+	[ç¼–è¾‘] è¾…åŠ©ç©ºé—´çš„æ¯”è¾ƒ
+	çº¿å½¢æ’åºã€å½’å¹¶æ’åºçš„è¾…åŠ©ç©ºé—´ä¸ºO(n),å¿«é€Ÿæ’åºçš„è¾…åŠ©ç©ºé—´ä¸ºO(logn),å…¶å®ƒæ’åºçš„è¾…åŠ©ç©ºé—´ä¸ºO(1)ã€‚
 	
 	*/
-	Item* m = head->link;	//ÓÃÀ´ÒÆ¶¯±È½ÏµÄÖ¸Õë
-	Item* max = head;		//ÓÃÀ´±£´æµ±Ç°×î´óItem  µÄÇ°Ò»¸öItemµÄÖ¸Õë
-	Item* last = head;	//ÓÃÀ´Ö¸ÏòĞÂµÄÁ´±íµÄÄ©Î²
+	Item* m = head->link;	//ç”¨æ¥ç§»åŠ¨æ¯”è¾ƒçš„æŒ‡é’ˆ
+	Item* max = head;		//ç”¨æ¥ä¿å­˜å½“å‰æœ€å¤§Item  çš„å‰ä¸€ä¸ªItemçš„æŒ‡é’ˆ
+	Item* last = head;	//ç”¨æ¥æŒ‡å‘æ–°çš„é“¾è¡¨çš„æœ«å°¾
 	
 	for (int j = 0; j < size - 1; j++) {
 		while (m->link!=NULL)
@@ -135,14 +135,14 @@ bool LinkedList::sortJ()
 			m = m->link;
 		}
 		
-		//¿ªÊ¼½»»»
+		//å¼€å§‹äº¤æ¢
 		/*
-		²½ÖèËµÃ÷£¬last ºóÒÆÒ»²½£¬maxºóÒÆÒ»²½£¬ÓÃÖĞ¼äÖµÒÆ¶¯½ÚµãËÄ²½
+		æ­¥éª¤è¯´æ˜ï¼Œlast åç§»ä¸€æ­¥ï¼Œmaxåç§»ä¸€æ­¥ï¼Œç”¨ä¸­é—´å€¼ç§»åŠ¨èŠ‚ç‚¹å››æ­¥
 		*/
 		if (last != max) {
-			Item* aa = last->link; //²»Òª¶ªÁËlastºóÃæÃ»ÅÅĞò
-			last->link = max->link;	//°ÑËÑË÷µ½µÄ×î´óµÄÖµ¼Óµ½lastºóÃæ
-			max->link = last->link->link;	//°Ñ×î´óÖµµÄºóÏîÁ¬½Óµ½×î´óÖµÇ°ÏîÉÏ
+			Item* aa = last->link; //ä¸è¦ä¸¢äº†laståé¢æ²¡æ’åº
+			last->link = max->link;	//æŠŠæœç´¢åˆ°çš„æœ€å¤§çš„å€¼åŠ åˆ°laståé¢
+			max->link = last->link->link;	//æŠŠæœ€å¤§å€¼çš„åé¡¹è¿æ¥åˆ°æœ€å¤§å€¼å‰é¡¹ä¸Š
 			last->link->link = aa;
 		}
 		last = last->link;
@@ -157,11 +157,11 @@ bool LinkedList::sortJ()
 
 bool LinkedList::sortZ()
 {
-	Item* m = head;	//ÓÃÀ´ÒÆ¶¯±È½ÏµÄÖ¸Õë
-	Item* min = head;		//ÓÃÀ´±£´æµ±Ç°Ğ¡ItemµÄÇ°Ò»¸öItemµÄÖ¸Õë
-	Item* last = head;	//ÓÃÀ´Ö¸ÏòĞÂµÄÁ´±íµÄÄ©Î²
-						//Ã°ÅİÅÅĞò
-						//ÒòÎªµ±Ö»ÓĞÒ»¸öÃ»ÓĞ±È½ÏÊ±£¬²»ĞèÒª±È½Ï
+	Item* m = head;	//ç”¨æ¥ç§»åŠ¨æ¯”è¾ƒçš„æŒ‡é’ˆ
+	Item* min = head;		//ç”¨æ¥ä¿å­˜å½“å‰å°Itemçš„å‰ä¸€ä¸ªItemçš„æŒ‡é’ˆ
+	Item* last = head;	//ç”¨æ¥æŒ‡å‘æ–°çš„é“¾è¡¨çš„æœ«å°¾
+						//å†’æ³¡æ’åº
+						//å› ä¸ºå½“åªæœ‰ä¸€ä¸ªæ²¡æœ‰æ¯”è¾ƒæ—¶ï¼Œä¸éœ€è¦æ¯”è¾ƒ
 	for (int j = 0; j < size - 1; j++) {
 		while (m->link != NULL)
 		{
@@ -172,9 +172,9 @@ bool LinkedList::sortZ()
 			m = m->link;
 		}
 		if (last != min) {
-			Item* aa = last->link; //²»Òª¶ªÁËlastºóÃæÃ»ÅÅĞò
-			last->link = min->link;	//°ÑËÑË÷µ½µÄ×î´óµÄÖµ¼Óµ½lastºóÃæ
-			min->link = last->link->link;	//°Ñ×î´óÖµµÄºóÏîÁ¬½Óµ½×î´óÖµÇ°ÏîÉÏ
+			Item* aa = last->link; //ä¸è¦ä¸¢äº†laståé¢æ²¡æ’åº
+			last->link = min->link;	//æŠŠæœç´¢åˆ°çš„æœ€å¤§çš„å€¼åŠ åˆ°laståé¢
+			min->link = last->link->link;	//æŠŠæœ€å¤§å€¼çš„åé¡¹è¿æ¥åˆ°æœ€å¤§å€¼å‰é¡¹ä¸Š
 			last->link->link = aa;
 		}
 		last = last->link;
@@ -189,17 +189,17 @@ bool LinkedList::sortZ()
 
 int LinkedList::deleteItem(int index)
 {
-	// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 	if (index > size || index < 1) {
-		//·Ç·¨
-		throw "ÂèÑ½£¬Õâ·¸·¨ÁË";
+		//éæ³•
+		throw "å¦ˆå‘€ï¼Œè¿™çŠ¯æ³•äº†";
 	}
 	else
 	{
-		int date;  //½«ÒªÉ¾³ıµÄItem»¹ÊÇ±£´æÊı¾İ·µ»Ø°É
-		Item* n = indexAt(index - 2); //Ç°Çı
-		Item* old = n->link;				//µ±Ç°
-		n->link = old->link;			//Ç°Çı±£´æºóÇıµÄµØÖ·
+		int date;  //å°†è¦åˆ é™¤çš„Itemè¿˜æ˜¯ä¿å­˜æ•°æ®è¿”å›å§
+		Item* n = indexAt(index - 2); //å‰é©±
+		Item* old = n->link;				//å½“å‰
+		n->link = old->link;			//å‰é©±ä¿å­˜åé©±çš„åœ°å€
 		date = old->data;
 		delete old;
 		old = NULL;
@@ -224,7 +224,7 @@ Item * LinkedList::indexAt(int index) const
 		return nullptr;
 	else
 	{
-		//Ìø¹ıÍ·½Úµã
+		//è·³è¿‡å¤´èŠ‚ç‚¹
 		Item* p = head;
 		for (int i = 0; i <= index&&p->link!=NULL; i++)
 		{
@@ -237,8 +237,8 @@ Item * LinkedList::indexAt(int index) const
 bool LinkedList::makeEmpty()
 {
 	/*
-	Çå¿ÕÁ´±íÊ±ºò
-	´ÓÍ·+1µ½Î²É¾³ı
+	æ¸…ç©ºé“¾è¡¨æ—¶å€™
+	ä»å¤´+1åˆ°å°¾åˆ é™¤
 	*/
 	while (head->link != NULL)
 	{
@@ -252,7 +252,7 @@ bool LinkedList::makeEmpty()
 
 LinkedList & LinkedList::operator<<(int num)
 {
-	// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 	append(num);
 	return *this;
 }
@@ -260,40 +260,40 @@ LinkedList & LinkedList::operator<<(int num)
 bool LinkedList::Merge(LinkedList & list)
 {
 	/*
-		Á½ÌõµİÔöºÏ²¢Îªµİ¼õ
+		ä¸¤æ¡é€’å¢åˆå¹¶ä¸ºé€’å‡
 	
 	*/
 	Item* pa, *pb; 
 	pa = head->link;   
 	pb = list.head->link; 
 
-	list.head->link = NULL; //½Ø¶ÏlistÁ´±í
+	list.head->link = NULL; //æˆªæ–­listé“¾è¡¨
 	head->link = NULL;
 	while (pa!=NULL&&pb!=NULL)
 	{
-		Item* p = head->link;	//p±£´æ
-		//±È½ÏÍ·²¿µÄ´óĞ¡£¬½ÏĞ¡µÄ½ØÏÂÀ´
+		Item* p = head->link;	//pä¿å­˜
+		//æ¯”è¾ƒå¤´éƒ¨çš„å¤§å°ï¼Œè¾ƒå°çš„æˆªä¸‹æ¥
 		if (pa->data > pb->data) {
-			head->link = pb;	//½«pbÁ¬½Óµ½Í·½ÚµãºóÃæ
-			pb = pb->link;		//ºóÒÆpb£»
+			head->link = pb;	//å°†pbè¿æ¥åˆ°å¤´èŠ‚ç‚¹åé¢
+			pb = pb->link;		//åç§»pbï¼›
 		}
 		else{
-			head->link = pa;	//½«paÁ¬½Óµ½Í·½ÚµãºóÃæ
-			pa = pa->link;		//ºóÒÆpa£»
+			head->link = pa;	//å°†paè¿æ¥åˆ°å¤´èŠ‚ç‚¹åé¢
+			pa = pa->link;		//åç§»paï¼›
 		}
-		head->link->link = p;//ÔÙ½«Ô­À´Í·½ÚµãºóÃæµÄ½Óµ½ĞÂ²åÈëµÄpbÉÏ//
+		head->link->link = p;//å†å°†åŸæ¥å¤´èŠ‚ç‚¹åé¢çš„æ¥åˆ°æ–°æ’å…¥çš„pbä¸Š//
 	}
 
-	//´ËÊ±£¬±Ø¶¨ÓĞÒ»Ìõ²»Îª¿Õ
+	//æ­¤æ—¶ï¼Œå¿…å®šæœ‰ä¸€æ¡ä¸ä¸ºç©º
 	Item* noNull = pa ? pa : pb;
 	while (noNull)
 	{
 		Item *mind = head->link;
 		head->link = noNull;
-		noNull = noNull->link;	//ºóÒÆ£¬×¼±¸ÇĞ¸î
+		noNull = noNull->link;	//åç§»ï¼Œå‡†å¤‡åˆ‡å‰²
 		head->link->link = mind;
 	}
-	//×îºó
+	//æœ€å
 
 
 	size = size + list.size;
@@ -304,7 +304,7 @@ bool LinkedList::Merge(LinkedList & list)
 void LinkedList::output()
 {
 	Item *item = head->link;
-	//Ñ­»·
+	//å¾ªç¯
 	while (item)
 	{
 		std::cout << item->data << std::endl;

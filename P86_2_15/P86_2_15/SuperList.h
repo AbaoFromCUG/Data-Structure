@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-//µ¥ÏòÁ´±í
+//å•å‘é“¾è¡¨
 template<typename T>
 struct ListNode {
 	T date;
@@ -25,21 +25,21 @@ class SuperList
 public:
 	SuperList();
 	virtual ~SuperList();
-	bool prepend(T t);		//ÔÚÍ·ÉÏ²åÈë
-	bool append(T t);		//ÔÚÎ²²¿×·¼Ó
+	bool prepend(T t);		//åœ¨å¤´ä¸Šæ’å…¥
+	bool append(T t);		//åœ¨å°¾éƒ¨è¿½åŠ 
 	bool insertBefore(int index,T 
-		t);		//ÔÚµÚindex½ÚµãÇ°Ãæ²åÈë
-	bool insertAfter(int index,T t);			//ÔÚµÚindex¸ö½ÚµãºóÃæ²åÈë
-	void makeEmpty();						//Çå¿ÕÁ´±í£¬±£´æÍ·½Úµã
-	T& remove(int index);			//É¾³ıµÚindex¸ö½Úµãindex>=0£¬·µ»ØÖµT
+		t);		//åœ¨ç¬¬indexèŠ‚ç‚¹å‰é¢æ’å…¥
+	bool insertAfter(int index,T t);			//åœ¨ç¬¬indexä¸ªèŠ‚ç‚¹åé¢æ’å…¥
+	void makeEmpty();						//æ¸…ç©ºé“¾è¡¨ï¼Œä¿å­˜å¤´èŠ‚ç‚¹
+	T& remove(int index);			//åˆ é™¤ç¬¬indexä¸ªèŠ‚ç‚¹index>=0ï¼Œè¿”å›å€¼T
 	void sort(int begin,int end , bool (*func)(T a,T b));
 	void sort(bool(*func)(T a, T b));
 	
 	SuperList<T>& operator<<(T t);
 	int getSize();
-	//¹é²¢£¿£¬
-	void merge(SuperList<T>& t);		//Á½ÌõµİÔöºÏ²¢Îªµİ¼õ	
-	void reverse();						//ÄæÖÃ
+	//å½’å¹¶ï¼Ÿï¼Œ
+	void merge(SuperList<T>& t);		//ä¸¤æ¡é€’å¢åˆå¹¶ä¸ºé€’å‡	
+	void reverse();						//é€†ç½®
 	
 	ListNode<T>* locate(int index);
 
@@ -54,7 +54,7 @@ protected:
 template<typename T>
 inline SuperList<T>::SuperList()
 {
-	//Ä¬ÈÏ¹¹Ôì? ÄÇÃ´T¾Í±ØĞëÒªÓÖÄ¬ÈÏ¹¹Ôìº¯Êı
+	//é»˜è®¤æ„é€ ? é‚£ä¹ˆTå°±å¿…é¡»è¦åˆé»˜è®¤æ„é€ å‡½æ•°
 	first = new ListNode<T>;
 	last = first;
 	size = 0;
@@ -81,7 +81,7 @@ inline bool SuperList<T>::prepend(T t)
 template<typename T>
 inline bool SuperList<T>::append(T  t)
 {
-	last->link = new ListNode<T>(T(t)); //µ÷ÓÃÔÚÄ©Î²×·¼Ó×¨ÓÃ¹¹Ôì next¸³ÖµÎªNULL
+	last->link = new ListNode<T>(T(t)); //è°ƒç”¨åœ¨æœ«å°¾è¿½åŠ ä¸“ç”¨æ„é€  nextèµ‹å€¼ä¸ºNULL
 	last = last->link;
 	size++;
 	return true;
@@ -91,15 +91,15 @@ template<typename T>
 inline bool SuperList<T>::insertBefore(int index, T  t)
 {
 	if (index >= size || index<0) {
-		//·Ç·¨Ô½½ç
-		throw "Ô½½çÁËÅ¶";
+		//éæ³•è¶Šç•Œ
+		throw "è¶Šç•Œäº†å“¦";
 		return false;
 	}
 	else
 	{
-		ListNode<T>* n = locate(index-1); //Ç°Çı
+		ListNode<T>* n = locate(index-1); //å‰é©±
 		ListNode<T>* newItem = new ListNode<T>(t, n->link);
-		n->link = newItem;		   //Ç°Çı±£´æµÄlinkÖ¸ÏònewµÄItem
+		n->link = newItem;		   //å‰é©±ä¿å­˜çš„linkæŒ‡å‘newçš„Item
 		size++;
 		return true;
 	}
@@ -109,12 +109,12 @@ template<typename T>
 inline bool SuperList<T>::insertAfter(int index, T t)
 {
 	if (index >= size || index<0) {
-		//·Ç·¨Ô½½ç
+		//éæ³•è¶Šç•Œ
 		return false;
 	}
 	else
 	{
-		ListNode<T>* n = locate(index ); //Ç°Çı
+		ListNode<T>* n = locate(index ); //å‰é©±
 		ListNode<T>* newItem = new ListNode<T>(t, n->link);
 		if (!n->link) {
 			last = newItem;
@@ -140,7 +140,7 @@ inline void SuperList<T>::makeEmpty()
 template<typename T>
 inline T & SuperList<T>::remove(int index)
 {
-	// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 	size--;
 	ListNode<T>* node = locate(index - 1);
 	ListNode<T>* n = node->link;
@@ -156,7 +156,7 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 {
 	if (begin<0&&end>size-1)
 	{
-		throw" Ô½½ç·Ç·¨";
+		throw" è¶Šç•Œéæ³•";
 
 	}
 	else if (end == -1)
@@ -165,8 +165,8 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 	}
 	else if (begin>end)
 	{
-		//ÅÅĞòÇ°²»¿ÉÒÔ´óÓÚÅÅĞòºó
-		throw" ·Ç·¨";
+		//æ’åºå‰ä¸å¯ä»¥å¤§äºæ’åºå
+		throw" éæ³•";
 	}
 	
 	else if ((end-begin)<=1&&(end - begin) >= 0)
@@ -197,7 +197,7 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 	
 	ListNode<T>* l = beginNode;
 	ListNode<T>* move = beginNode->link;	//
-	ListNode<T>* miax = beginNode;//¼«Öµ
+	ListNode<T>* miax = beginNode;//æå€¼
 	
 	for (int j = 0; j < end - begin - 1; j++) {
 		while (move->link&&move->link!=endNode)
@@ -208,9 +208,9 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 			move = move->link;
 		}
 		if (l != miax) {
-			ListNode<T>* aa = l->link; //²»Òª¶ªÁËlºóÃæÃ»ÅÅĞò
-			l->link = miax->link;	//°ÑËÑË÷µ½µÄ×î´óµÄÖµ¼Óµ½lºóÃæ
-			miax->link = l->link->link;	//°Ñ×î´óÖµµÄºóÏîÁ¬½Óµ½×î´óÖµÇ°ÏîÉÏ
+			ListNode<T>* aa = l->link; //ä¸è¦ä¸¢äº†låé¢æ²¡æ’åº
+			l->link = miax->link;	//æŠŠæœç´¢åˆ°çš„æœ€å¤§çš„å€¼åŠ åˆ°låé¢
+			miax->link = l->link->link;	//æŠŠæœ€å¤§å€¼çš„åé¡¹è¿æ¥åˆ°æœ€å¤§å€¼å‰é¡¹ä¸Š
 			l->link->link = aa;
 		}
 		l = l->link;
@@ -229,9 +229,9 @@ template<typename T>
 inline void SuperList<T>::sort(bool(*func)(T a, T b))
 
 {
-	ListNode<T>* m = first;	//ÓÃÀ´ÒÆ¶¯±È½ÏµÄÖ¸Õë
-	ListNode<T>* min = first;		//ÓÃÀ´±£´æµ±Ç°Ğ¡ListNode<T>µÄÇ°Ò»¸öListNode<T>µÄÖ¸Õë
-	ListNode<T>* l = first;	//ÓÃÀ´Ö¸ÏòĞÂµÄÁ´±íµÄÄ©Î²
+	ListNode<T>* m = first;	//ç”¨æ¥ç§»åŠ¨æ¯”è¾ƒçš„æŒ‡é’ˆ
+	ListNode<T>* min = first;		//ç”¨æ¥ä¿å­˜å½“å‰å°ListNode<T>çš„å‰ä¸€ä¸ªListNode<T>çš„æŒ‡é’ˆ
+	ListNode<T>* l = first;	//ç”¨æ¥æŒ‡å‘æ–°çš„é“¾è¡¨çš„æœ«å°¾
 	for (int j = 0; j < size - 1; j++) {
 		while (m->link != NULL)
 		{
@@ -242,9 +242,9 @@ inline void SuperList<T>::sort(bool(*func)(T a, T b))
 			m = m->link;
 		}
 		if (l != min) {
-			ListNode<T>* aa = l->link; //²»Òª¶ªÁËlºóÃæÃ»ÅÅĞò
-			l->link = min->link;	//°ÑËÑË÷µ½µÄ×î´óµÄÖµ¼Óµ½lºóÃæ
-			min->link = l->link->link;	//°Ñ×î´óÖµµÄºóÏîÁ¬½Óµ½×î´óÖµÇ°ÏîÉÏ
+			ListNode<T>* aa = l->link; //ä¸è¦ä¸¢äº†låé¢æ²¡æ’åº
+			l->link = min->link;	//æŠŠæœç´¢åˆ°çš„æœ€å¤§çš„å€¼åŠ åˆ°låé¢
+			min->link = l->link->link;	//æŠŠæœ€å¤§å€¼çš„åé¡¹è¿æ¥åˆ°æœ€å¤§å€¼å‰é¡¹ä¸Š
 			l->link->link = aa;
 		}
 		l = l->link;
@@ -259,7 +259,7 @@ inline void SuperList<T>::sort(bool(*func)(T a, T b))
 template<typename T>
 inline SuperList<T>& SuperList<T>::operator<<(T t)
 {
-	// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 	append(t);
 	return *this;
 }
@@ -273,16 +273,16 @@ inline int SuperList<T>::getSize()
 }
 
 template<typename T>
-inline void SuperList<T>::merge(SuperList<T>& t)  //Á½ÌõµİÔöºÏ²¢Îªµİ¼õ
+inline void SuperList<T>::merge(SuperList<T>& t)  //ä¸¤æ¡é€’å¢åˆå¹¶ä¸ºé€’å‡
 {
-	// TODO: ÔÚ´Ë´¦²åÈë return Óï¾ä
+	// TODO: åœ¨æ­¤å¤„æ’å…¥ return è¯­å¥
 
 	ListNode<T>* pa = first->link;
 	ListNode<T>* pb = t.first->link;
 	first->link = NULL;
 	t.first->link = NULL;
 
-	//ÏÈÈ·¶¨ĞÂµÄÎ²½Úµã
+	//å…ˆç¡®å®šæ–°çš„å°¾èŠ‚ç‚¹
 	last = pa->date > pb->date ? pb : pa;
 	while (pa&&pb)
 	{
@@ -300,7 +300,7 @@ inline void SuperList<T>::merge(SuperList<T>& t)  //Á½ÌõµİÔöºÏ²¢Îªµİ¼õ
 		first->link = node;
 	}
 
-	//´ËÊ±£¬±Ø¶¨ÓĞÒ»ÌõÃ»ÓĞÇå¿Õ
+	//æ­¤æ—¶ï¼Œå¿…å®šæœ‰ä¸€æ¡æ²¡æœ‰æ¸…ç©º
 	ListNode<T>* noNull = pa ? pa : pb;
 	while (noNull)
 	{
@@ -317,10 +317,10 @@ inline void SuperList<T>::merge(SuperList<T>& t)  //Á½ÌõµİÔöºÏ²¢Îªµİ¼õ
 template<typename T>
 inline void SuperList<T>::reverse()
 {
-	last = first->link;  //Í·±äÎ²²¿
-	ListNode<T>* node = first->link;	//±£´æÓĞĞ§Á´±í
-	ListNode<T>* lNode;			//×÷ÎªÖĞ¼ä±äÁ¿
-	first->link =NULL;	//°Ñfist ½Ø¶Ï
+	last = first->link;  //å¤´å˜å°¾éƒ¨
+	ListNode<T>* node = first->link;	//ä¿å­˜æœ‰æ•ˆé“¾è¡¨
+	ListNode<T>* lNode;			//ä½œä¸ºä¸­é—´å˜é‡
+	first->link =NULL;	//æŠŠfist æˆªæ–­
 	while (node)
 	{
 		lNode = first->link;
@@ -335,7 +335,7 @@ template<typename T>
 inline ListNode<T>* SuperList<T>::locate(int index)
 {
 	if (index < -1) {
-		return NULL;	   // i²»ºÏÀí?
+		return NULL;	   // iä¸åˆç†?
 	}
 		
 	ListNode<T> * current = first;  
@@ -344,27 +344,27 @@ inline ListNode<T>* SuperList<T>::locate(int index)
 	{
 		current = current->link;  k++;
 	}
-	return current;	    //·µ»ØµÚ i ºÅ½áµãµØÖ·»òNULL
+	return current;	    //è¿”å›ç¬¬ i å·ç»“ç‚¹åœ°å€æˆ–NULL
 };
 
 
 template<typename T>
 inline void SuperList<T>::output()
 {
-	//Õâ¸öº¯ÊıÈç¹ûÒªµ÷ÓÃ£¬T±ØĞëÖØÔØÁ÷
+	//è¿™ä¸ªå‡½æ•°å¦‚æœè¦è°ƒç”¨ï¼ŒTå¿…é¡»é‡è½½æµ
 
 	if (size == 0) {
-		cout << "Õâ¸öÁ´±í£¬³¤¶ÈÎª£º" << size << endl;
-		cout << "Êä³öÍê±Ï" << endl;
+		cout << "è¿™ä¸ªé“¾è¡¨ï¼Œé•¿åº¦ä¸ºï¼š" << size << endl;
+		cout << "è¾“å‡ºå®Œæ¯•" << endl;
 		return;
 	}
-	//ÔÚÕâÀïÊäÈë¸÷ÖÖĞÅÏ¢°É
-	cout << "Õâ¸öÁ´±í£¬³¤¶ÈÎª£º" << size << endl;
-	cout << "Í·½ÚµãµÄÊı¾İÎª£º " << first->link->date << endl;
-	cout << "Î²½ÚµãµÄÊı¾İÎª£º " << last->date << endl;
-	cout << "¸÷¸ö½ÚµãµÄÊı¾İÒÀ´Î±éÀúÎª: " ;
+	//åœ¨è¿™é‡Œè¾“å…¥å„ç§ä¿¡æ¯å§
+	cout << "è¿™ä¸ªé“¾è¡¨ï¼Œé•¿åº¦ä¸ºï¼š" << size << endl;
+	cout << "å¤´èŠ‚ç‚¹çš„æ•°æ®ä¸ºï¼š " << first->link->date << endl;
+	cout << "å°¾èŠ‚ç‚¹çš„æ•°æ®ä¸ºï¼š " << last->date << endl;
+	cout << "å„ä¸ªèŠ‚ç‚¹çš„æ•°æ®ä¾æ¬¡éå†ä¸º: " ;
 	ListNode<T> *item = first->link;
-	//Ñ­»·
+	//å¾ªç¯
 	while (item)
 	{
 		std::cout << item->date << "--->";

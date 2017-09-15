@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<iostream>
 struct Item
 {
@@ -13,23 +13,23 @@ public:
 	virtual ~LinkedList();
 	
 	bool  append(const int& num);
-	bool insertBefore(int index,const int& data);  //ÔÚµÚindexÇ°Ãæ²åÈë
-	bool insertBehind(int index, const int& data);	//ÔÚµÚindexºóÃæ²åÈë
+	bool insertBefore(int index,const int& data);  //åœ¨ç¬¬indexå‰é¢æ’å…¥
+	bool insertBehind(int index, const int& data);	//åœ¨ç¬¬indexåé¢æ’å…¥
 	int deleteItem(int index);
-	int getData(int i) const;	//È¡³öµÚiÔªËØÖµ
-	void setData(int i, int x);		//¸üĞÂµÚiÔªËØÖµ
+	int getData(int i) const;	//å–å‡ºç¬¬iå…ƒç´ å€¼
+	void setData(int i, int x);		//æ›´æ–°ç¬¬iå…ƒç´ å€¼
 
-	bool sortJ();		//½µĞòÅÅ,²»Ôö¼Ó¿Õ¼ä¸´ÔÓ¶È
-	bool sortZ();		//ÔöĞòÅÅĞò
-	Item* indexAt(int index) const;          /*ÀàËÆÊı×é£¬0 ÎªµÚÒ»¸ö£¬1ÎªµÚ¶ş¸ö*/
+	bool sortJ();		//é™åºæ’,ä¸å¢åŠ ç©ºé—´å¤æ‚åº¦
+	bool sortZ();		//å¢åºæ’åº
+	Item* indexAt(int index) const;          /*ç±»ä¼¼æ•°ç»„ï¼Œ0 ä¸ºç¬¬ä¸€ä¸ªï¼Œ1ä¸ºç¬¬äºŒä¸ª*/
 	bool makeEmpty();
 
 
 	LinkedList& operator<<(int num);
-	//ºÏ²¢Ëã·¨
+	//åˆå¹¶ç®—æ³•
 	/*
-		ÉèhaºÍhb·Ö±ğÊÇÁ½¸ö´ø±íÍ·½áµãµÄ·Çµİ¼õÓĞĞòµ¥Á´±íµÄ±íÍ·Ö¸Õë£¬ÊÔÉè¼ÆÒ»¸öËã·¨£¬
-		½«ÕâÁ½¸öÓĞĞòÁ´±íºÏ²¢³ÉÒ»¸ö·ÇµİÔöÓĞĞòµÄµ¥Á´±í¡£
+		è®¾haå’Œhbåˆ†åˆ«æ˜¯ä¸¤ä¸ªå¸¦è¡¨å¤´ç»“ç‚¹çš„éé€’å‡æœ‰åºå•é“¾è¡¨çš„è¡¨å¤´æŒ‡é’ˆï¼Œè¯•è®¾è®¡ä¸€ä¸ªç®—æ³•ï¼Œ
+		å°†è¿™ä¸¤ä¸ªæœ‰åºé“¾è¡¨åˆå¹¶æˆä¸€ä¸ªéé€’å¢æœ‰åºçš„å•é“¾è¡¨ã€‚
 	*/
 	bool Merge(LinkedList& list);
 
@@ -38,9 +38,9 @@ public:
 	
 protected:
 	/*
-	* °ÑÒ»¸öÎ»ÖÃµÄÇĞ³öÀ´£¬µ«ÊÇ¿Õ¼ä²»deleteµô
-	* index ´Ó0¿ªÊ¼
-	* ÒòÎª¿Õ¼ä²¢²»»ádelete£¬µ«ÊÇµØÖ··µ»ØÀ´ÁË£¬ËùÒÔÉèÖÃÎªprotect
+	* æŠŠä¸€ä¸ªä½ç½®çš„åˆ‡å‡ºæ¥ï¼Œä½†æ˜¯ç©ºé—´ä¸deleteæ‰
+	* index ä»0å¼€å§‹
+	* å› ä¸ºç©ºé—´å¹¶ä¸ä¼šdeleteï¼Œä½†æ˜¯åœ°å€è¿”å›æ¥äº†ï¼Œæ‰€ä»¥è®¾ç½®ä¸ºprotect
 	*/
 	Item * head;
 	int size;

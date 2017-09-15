@@ -1,4 +1,4 @@
-// P86_2_15.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+ï»¿// P86_2_15.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -22,7 +22,7 @@ void recursionB(ListNode<T>* t) {
 	cout << t->date << "--->";
 }
 
-//LinkedList²âÊÔ´úÂë
+//LinkedListæµ‹è¯•ä»£ç 
 void fun1() {
 	LinkedList lit;
 	lit.append(1);
@@ -50,7 +50,7 @@ void fun1() {
 
 }
 
-//SuperList ÅÅĞò×¨ÓÃ²âÊÔº¯Êı
+//SuperList æ’åºä¸“ç”¨æµ‹è¯•å‡½æ•°
 void fun2() {
 	SuperList<int> list;
 	list.append(1);
@@ -61,42 +61,42 @@ void fun2() {
 	list.append(126);
 	list.append(120);
 
-	cout << "¡¶-----Ô­À´µÄĞòÁĞ---->" << endl;
+	cout << "ã€Š-----åŸæ¥çš„åºåˆ—---->" << endl;
 	list.output();
 
 	list.sort([](int x, int y)->bool {
 		return x < y;
 	});
-	cout << "¡¶-----È«²¿ÅÅĞòºóµÄĞòÁĞ---->" << endl;
+	cout << "ã€Š-----å…¨éƒ¨æ’åºåçš„åºåˆ—---->" << endl;
 	list.output();
 
 	list.sort(2, -1, [](int x, int y)->bool {
 		return x > y;
 	});
-	cout << "¡¶----2£¬5ÅÅĞòºó----->" << endl;
+	cout << "ã€Š----2ï¼Œ5æ’åºå----->" << endl;
 
 	list.output();
 	list.sort(2, 6, [](int x, int y)->bool {
 		return x < y;
 	});
-	cout << "¡¶----2£¬5·´Ğòºó----->" << endl;
+	cout << "ã€Š----2ï¼Œ5ååºå----->" << endl;
 	list.output();
 
 }
 
-//Á÷£¬ÔöÉ¾¸Ä²é×¨ÓÃµÄ²âÊÔº¯Êı
+//æµï¼Œå¢åˆ æ”¹æŸ¥ä¸“ç”¨çš„æµ‹è¯•å‡½æ•°
 void fun3() {
 	SuperList<int> list;
 	list << 12 << 223 << 23 << 34 << 45;
-	cout << "-----------listÔ­--------------" << endl;
+	cout << "-----------liståŸ--------------" << endl;
 	list.output();
-	cout << "-------------listÒÆ³ıindex=2µÄÒ»¸öÖ®ºó------------" << endl;
+	cout << "-------------listç§»é™¤index=2çš„ä¸€ä¸ªä¹‹å------------" << endl;
 	list.remove(2);
 	list.output();
-	cout << "-------------listÔÚindex=2Ç°²åÈë------------" << endl;
+	cout << "-------------liståœ¨index=2å‰æ’å…¥------------" << endl;
 	list.insertBefore(2,4);
 	list.output();
-	cout << "-------------listÔÚindex=4ºó²åÈë------------" << endl;
+	cout << "-------------liståœ¨index=4åæ’å…¥------------" << endl;
 	list.insertAfter(4, 4);
 	list.output();
 	
@@ -104,7 +104,7 @@ void fun3() {
 
 }
 
-//µİÔöĞòÁĞ¹é²¢Îªµİ¼õĞòÁĞ
+//é€’å¢åºåˆ—å½’å¹¶ä¸ºé€’å‡åºåˆ—
 void fun4() {
 	SuperList<int> list1;
 	SuperList<int> list2;
@@ -116,27 +116,27 @@ void fun4() {
 	list2.output();
 }
 
-//µ¥Á´±íµÄÄæÖÃ²âÊÔ´úÂë
+//å•é“¾è¡¨çš„é€†ç½®æµ‹è¯•ä»£ç 
 void fun5() {
 	SuperList<int> list;
 	list << 12 << 23 << 56 << 12 << 89;
-	cout << "--------Ô­Á´±í------" << endl;
+	cout << "--------åŸé“¾è¡¨------" << endl;
 	list.output();
 	list.reverse();
-	cout << "--------Ô­µØÄæÖÃ------" << endl;
+	cout << "--------åŸåœ°é€†ç½®------" << endl;
 	list.output();
 }
 
-//µİ¹éÊä³ö
+//é€’å½’è¾“å‡º
 void fun6() {
 	SuperList<int> list;
 	list << 12 << 56 << 34 << 90 << 45;
-	cout << "---------------Ô­Á´±í------------" << endl;
+	cout << "---------------åŸé“¾è¡¨------------" << endl;
 	list.output();
-	cout << "---µİ¹éÕıĞòÊä³ö--" << endl;
+	cout << "---é€’å½’æ­£åºè¾“å‡º--" << endl;
 	recursionA(list.locate(0));
 	cout << endl;
-	cout << "---µİ¹éÄæĞòÊä³ö---" << endl;
+	cout << "---é€’å½’é€†åºè¾“å‡º---" << endl;
 	recursionB(list.locate(0));
 	cout << endl;
 }
