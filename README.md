@@ -1,5 +1,23 @@
 # 数据结构的各种实习
 
+#<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [数据结构的各种实习](#数据结构的各种实习)
+- [作业](#)
+		- [作业p84 2.6](#作业p84-26)
+		- [作业p86 2.15](#作业p86-215)
+	- [实习一](#实习一)
+		- [关于法雷序列](#关于法雷序列)
+			- [方案一：递归](#方案一递归)
+				- [深度优先](#深度优先)
+				- [广度优先](#广度优先)
+			- [总结： 法雷序列如果通过递归来进行搜索（？），那么无论是深度优先还是广度优先，选好终结条件是关键，另外，感觉深度优先递归（2的n次方？）的话更容易溢出，而广度优先由于递归的层数更少（递归层数？），更不容易溢出?但是，最终仍然会因为new的空间太大而不可以继续new](#总结-法雷序列如果通过递归来进行搜索那么无论是深度优先还是广度优先选好终结条件是关键另外感觉深度优先递归2的n次方的话更容易溢出而广度优先由于递归的层数更少递归层数更不容易溢出但是最终仍然会因为new的空间太大而不可以继续new)
+			- [方案二： 循环](#方案二-循环)
+
+<!-- /TOC -->
+
+
+
 ### 作业p84 2.6
 实现了一个顺序表，一些基本功能，模板的
 
@@ -47,9 +65,9 @@ void FareyList::recursion(ListNode<Fraction>* a, ListNode<Fraction>* b)
 	recursion(m, b);
 }
 ```
-<img src="assets/markdown-img-paste-20170916120930883.png" width=300 alt="正常的运行" >
+<img src="assets/markdown-img-paste-20170916120930883.png" width=500 alt="正常的运行" >
 -----
-<img src="assets/markdown-img-paste-2017091612064045.png" width=300 alt="Stack overflow">
+<img src="assets/markdown-img-paste-2017091612064045.png" width=500 alt="Stack overflow">
 
 ##### 广度优先
 ```cpp
@@ -73,10 +91,11 @@ void FareyList::recursion()
 }
 ```
 
-<img src="assets/markdown-img-paste-20170916134915584.png" width=300 alt="深度优先vs广度优先">
+<img src="assets/markdown-img-paste-20170916134915584.png" width=500 alt="深度优先vs广度优先">
 
 但是仍然崩溃，此时size=10938995
-<img src="assets/markdown-img-paste-2017091614375667.png" width=300 alt="广度优先">
+
+<img src="assets/markdown-img-paste-2017091614375667.png" width=500 alt="广度优先">
 
 ####总结： 法雷序列如果通过递归来进行搜索（？），那么无论是深度优先还是广度优先，选好终结条件是关键，另外，感觉深度优先递归（2的n次方？）的话更容易溢出，而广度优先由于递归的层数更少（递归层数？），更不容易溢出?但是，最终仍然会因为new的空间太大而不可以继续new
 
