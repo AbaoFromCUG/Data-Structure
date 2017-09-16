@@ -135,6 +135,8 @@ inline void SuperList<T>::makeEmpty()
 		delete n;
 		n = NULL;
 	}
+	last = first;
+	size = 0;
 }
 
 template<typename T>
