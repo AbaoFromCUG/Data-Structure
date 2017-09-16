@@ -1,5 +1,6 @@
 ﻿#pragma once
-
+#include<iostream>
+using namespace std;
 //单向链表
 template<typename T>
 struct ListNode {
@@ -27,9 +28,9 @@ public:
 	virtual ~SuperList();
 	bool prepend(T t);		//在头上插入
 	bool append(T t);		//在尾部追加
-	bool insertBefore(int index,T 
-		t);		//在第index节点前面插入
+	bool insertBefore(int index,T t);		//在第index节点前面插入
 	bool insertAfter(int index,T t);			//在第index个节点后面插入
+	ListNode<T>* insertBetween(ListNode<T>* a, ListNode<T>* b, T t);
 	void makeEmpty();						//清空链表，保存头节点
 	T& remove(int index);			//删除第index个节点index>=0，返回值T
 	void sort(int begin,int end , bool (*func)(T a,T b));
@@ -42,7 +43,8 @@ public:
 	void reverse();						//逆置
 	
 	ListNode<T>* locate(int index);
-
+	ListNode<T>* getFirst();
+	ListNode<T>* getLast();
 	//
 	void output();
 protected:
@@ -126,6 +128,20 @@ inline bool SuperList<T>::insertAfter(int index, T t)
 }
 
 template<typename T>
+inline ListNode<T>* SuperList<T>::insertBetween(ListNode<T>* a, ListNode<T>* b, T t)
+{
+	if (a&&b) {
+
+		ListNode<T>* newNode = new ListNode<T>(t, b);
+		a->link = newNode;
+		size++;
+		return newNode;
+	}else{
+		throw "exception";
+	}
+}
+
+template<typename T>
 inline void SuperList<T>::makeEmpty()
 {
 	while (first->link)
@@ -135,6 +151,8 @@ inline void SuperList<T>::makeEmpty()
 		delete n;
 		n = NULL;
 	}
+	last = first;
+	size = 0;
 }
 
 template<typename T>
@@ -345,7 +363,18 @@ inline ListNode<T>* SuperList<T>::locate(int index)
 		current = current->link;  k++;
 	}
 	return current;	    //返回第 i 号结点地址或NULL
-};
+}
+template<typename T>
+inline ListNode<T>* SuperList<T>::getFirst()
+{
+	return first->link;
+}
+template<typename T>
+inline ListNode<T>* SuperList<T>::getLast()
+{
+	return last;
+}
+;
 
 
 template<typename T>
