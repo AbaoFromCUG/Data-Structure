@@ -29,14 +29,13 @@ struct ListNode {
 各全模板，可自定义排序，通过传递函数指针
 重载了排序函数 begin ,end, sortFun*;
 
-###  实习一
-start
+##  实习一
 
-## 关于法雷序列
+### 关于法雷序列
 
-### 方案一：递归
+#### 方案一：递归
 
-#### 深度优先
+##### 深度优先
 在我的电脑上，大概3950-4000 之间的时候就开始栈溢出
 ```cpp
 void FareyList::recursion(ListNode<Fraction>* a, ListNode<Fraction>* b)
@@ -52,7 +51,7 @@ void FareyList::recursion(ListNode<Fraction>* a, ListNode<Fraction>* b)
 -----
 <img src="assets/markdown-img-paste-2017091612064045.png" width=300 alt="Stack overflow">
 
-#### 广度优先
+##### 广度优先
 ```cpp
 void FareyList::recursion()
 {
@@ -79,6 +78,6 @@ void FareyList::recursion()
 ####总结： 法雷序列如果通过递归来进行搜索（？），那么无论是深度优先还是广度优先，选好终结条件是关键，另外，感觉深度优先递归（2的n次方？）的话更容易溢出，而广度优先由于递归的层数更少（递归层数？），更不容易溢出##
 
 
-### 方案二： 循环
+#### 方案二： 循环
 
 待写
