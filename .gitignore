@@ -239,3 +239,8 @@ _Pvt_Extensions
 ## vscode
 .vscode/
 
+
+## qt project 
+build-*-Debug/
+build-*-Release
+
