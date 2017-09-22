@@ -6,6 +6,10 @@ struct Fraction
 	int n;	//分子 Numerator
 	int d;  //分母 Denominator
 	friend ostream & operator<<(ostream& os, Fraction& f);
+	Fraction(int nn=0, int dd=0) {
+		n = nn;
+		d = dd;
+	}
 };
 class FareyList
 {
