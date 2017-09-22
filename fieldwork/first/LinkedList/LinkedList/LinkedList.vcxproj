@@ -139,12 +139,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FareyList.h" />
+    <ClInclude Include="LargeFactorial.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SuperList.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="DoublyList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FareyList.cpp" />
+    <ClCompile Include="LargeFactorial.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

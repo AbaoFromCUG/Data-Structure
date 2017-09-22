@@ -6,6 +6,8 @@
 #include "stdafx.h"
 #include"SuperList.h"
 #include"FareyList.h"
+#include"LargeFactorial.h"
+#include"DoublyList.h"
 #include<iostream>
 #include <stdio.h>    
 #include <sys/timeb.h> 
@@ -17,6 +19,9 @@ using namespace std;
  * Abao
  *
  * */
+ 
+
+//打印时间戳
 void logCurrentTime()
 {
 	struct timeb tb;
@@ -39,19 +44,78 @@ void recursionB(ListNode<T>* t) {
 }
 
 //递增序列归并为递减序列
-void fun0() {
+void fun0();
+
+//单链表的逆置测试代码
+void fun1();
+
+//递归输出
+void fun2();
+
+//法雷序列的测试函数
+void fun3();
+
+//大数阶乘的测试函数
+void fun4();
+
+//双向链表；
+void fun5();
+
+
+int main()
+{
+	fun4();
+	system("pause");
+	return 2;
+	cout << "这只是个用以测试各种链表的项目" << endl;
+	cout << "请输入你想要测试的函数序号0-5：";
+	int num;
+	cin >> num;
+	switch (num)
+	{
+	case 0:
+		fun0();
+		break;
+	case 1:
+		fun1();
+		break;
+	case 2:
+		fun2();
+		break;
+	case 3:
+		fun3();
+		break;
+	case 4:
+		fun4();
+		break;
+	case 5:
+		fun5();
+		break;
+	default:
+		cout << "error,退出，请自行看代码" << endl;
+		break;
+	}
+	cout << "更多内容，请看代码" << endl;
+	
+    return 0;
+}
+
+void fun0()
+{
 	SuperList<int> list1;
 	SuperList<int> list2;
 	list1 << 1 << 3 << 5 << 7 << 9;
 	list2 << 2 << 4 << 6 << 8 << 10;
-	list1.merge(list2);
 	list1.output();
-	std::cout << "------------------------------------------" << std::endl;
+	list2.output();
+	list1.merge(list2);
+	std::cout << "-----------------合并后-------------------------" << std::endl;
+	list1.output();
 	list2.output();
 }
 
-//单链表的逆置测试代码
-void fun1() {
+void fun1()
+{
 	SuperList<int> list;
 	list << 12 << 23 << 56 << 12 << 89;
 	cout << "--------原链表------" << endl;
@@ -61,8 +125,8 @@ void fun1() {
 	list.output();
 }
 
-//递归输出
-void fun2() {
+void fun2()
+{
 	SuperList<int> list;
 	list << 12 << 56 << 34 << 90 << 45;
 	cout << "---------------原链表------------" << endl;
@@ -75,32 +139,64 @@ void fun2() {
 	cout << endl;
 }
 
-//
-void fun3() {
+void fun3()
+{
 	int num;
 	FareyList list;
 	cout << "请输入你想要求的最大法雷序列： ";
 	cin >> num;
-	bool choose;
-	cout << "请选择广度优先(0)，或者深度优先（非0）:";
+	int choose;
+	cout << "请选择广度优先(0)，或者深度优先（1）,或者迭代（2）:";
 	cin >> choose;
 	logCurrentTime();
-	if (choose) {
-		list.startDepth(num);
-	}
-	else
+	switch (choose)
 	{
+	case 0:
 		list.startBreadth(num);
+		break;
+	case 1:
+		list.startDepth(num);
+		break;
+	case 2:
+		list.startIterAtion(num);
+		break;
+	default:
+		cout << "输出有误，正在退出……";
+		return;
+		break;
 	}
 	logCurrentTime();
-	return;
+	
 	list.output();
+	return;
+
 }
 
-int main()
+void fun4()
 {
-	fun3();
-	fun3();
-	system("pause");
-    return 0;
+	cout << "请输入你要求的大数: ";
+	int num;
+	cin >> num;
+	for (int i = 3; i <8; i++)
+	{
+		LargeFactorial list(i);
+		cout << "当每个节点存" << i << "位时" << endl;
+		logCurrentTime();
+
+		list.start(num);
+		logCurrentTime();
+		list.output();
+		cout << endl;
+		//cout << "长度"<<list.getSize() << endl;
+		cout << "-----------------" << endl;
+	}
+	
+	
+}
+
+void fun5()
+{
+	DoublyList<int> list;
+	list << 12 << 23 << 54 << 87;
+	list.output();
 }
