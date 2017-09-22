@@ -5,7 +5,7 @@ using namespace std;
 template<typename T>
 struct ListNode {
 	T date;
-	
+
 	ListNode(ListNode<T> *ptr = NULL) { link = ptr; }
 	ListNode(T& t) {
 		date = t;
@@ -16,7 +16,7 @@ struct ListNode {
 		link = ptr;
 	}
 	ListNode* link;
-	
+
 };
 
 
@@ -35,13 +35,13 @@ public:
 	T& remove(int index);			//删除第index个节点index>=0，返回值T
 	void sort(int begin,int end , bool (*func)(T a,T b));
 	void sort(bool(*func)(T a, T b));
-	
+
 	SuperList<T>& operator<<(T t);
 	int getSize();
 	//归并？，
-	void merge(SuperList<T>& t);		//两条递增合并为递减	
+	void merge(SuperList<T>& t);		//两条递增合并为递减
 	void reverse();						//逆置
-	
+
 	ListNode<T>* locate(int index);
 	ListNode<T>* getFirst();
 	ListNode<T>* getLast();
@@ -51,7 +51,7 @@ protected:
 	ListNode<T>* first;
 	ListNode<T>* last;
 	int size;
-}; 
+};
 
 template<typename T>
 inline SuperList<T>::SuperList()
@@ -75,7 +75,7 @@ inline bool SuperList<T>::prepend(T t)
 {
 	ListNode<T> newNode = new ListNode<T>(t);
 	newNode.link = first->link;
-	first->link = newNode;	
+	first->link = newNode;
 	size++;
 	return true ;
 }
@@ -186,13 +186,13 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		//排序前不可以大于排序后
 		throw" 非法";
 	}
-	
+
 	else if ((end-begin)<=1&&(end - begin) >= 0)
 	{
 		return;
 	}
-	
-	
+
+
 	ListNode<T>* beginNode=first;
 	ListNode<T>* endNode;
 	int i = 0;
@@ -207,16 +207,16 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		i++;
 		endNode = endNode->link;
 	}
-	
+
 
 	//start;
 	cout << beginNode->date << "-------" << endNode->date << endl;
 	endNode = endNode->link;
-	
+
 	ListNode<T>* l = beginNode;
 	ListNode<T>* move = beginNode->link;	//
 	ListNode<T>* miax = beginNode;//极值
-	
+
 	for (int j = 0; j < end - begin - 1; j++) {
 		while (move->link&&move->link!=endNode)
 		{
@@ -240,7 +240,7 @@ inline void SuperList<T>::sort(int begin, int end, bool(*func)(T a, T b))
 		last = l->link;
 	}
 
-	
+
 }
 
 template<typename T>
@@ -343,7 +343,7 @@ inline void SuperList<T>::reverse()
 	{
 		lNode = first->link;
 		first->link = node;
-		node = node->link;	
+		node = node->link;
 		first->link->link = lNode;
 	}
 
@@ -355,8 +355,8 @@ inline ListNode<T>* SuperList<T>::locate(int index)
 	if (index < -1) {
 		return NULL;	   // i不合理?
 	}
-		
-	ListNode<T> * current = first;  
+
+	ListNode<T> * current = first;
 	int k = -1;
 	while ( k < index)
 	{
