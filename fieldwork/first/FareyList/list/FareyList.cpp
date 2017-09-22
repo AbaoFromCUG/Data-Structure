@@ -75,6 +75,7 @@ void FareyList::startIteration(long num)
 void FareyList::saveDate()
 {
     QFile file(fileName);
+
     if(file.open(QIODevice::WriteOnly)){
         QTextStream out(&file);
         QString cache;      //写入的速度决定于调取<<的次数，所以尽量先读取一定的缓存，分几次存入
@@ -88,9 +89,15 @@ void FareyList::saveDate()
             out<<cache;
             cache.clear();
         }
+
+
+        out<<QString("size：");
+        out<<QString::number(list.getSize());
     }else {
         emit this->error(1);
     }
+
+
     file.close();
     emit ok(2);     //第二步骤ok
 
