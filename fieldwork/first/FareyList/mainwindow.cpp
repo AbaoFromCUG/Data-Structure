@@ -168,7 +168,7 @@ void MainWindow::on_startBtn_clicked()
         if(status==2){
             showText="正在计算上一个法雷序列，无法重新计算";
         }else {
-            showText="正在将计算好的法雷序列写入文件，是否中止以开始重新计算？";
+            showText="正在将计算好的法雷序列写入文件，无法重新计算";
         }
         QMessageBox::information(this, tr("Hmmm..."), showText);
         return;
