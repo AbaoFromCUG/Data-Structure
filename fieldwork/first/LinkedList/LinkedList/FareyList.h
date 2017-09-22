@@ -18,9 +18,11 @@ public:
 	~FareyList();
 	void startDepth(long num);
 	void startBreadth(long num);
+	void startIterAtion(long num);
 	void recursion(ListNode<Fraction>* a,ListNode<Fraction>*b);		//深度优先
 	void recursion();						//广度优先
 	void output();
+	void test();
 protected:
 	SuperList<Fraction> list;
 	int maxNum;
