@@ -32,6 +32,24 @@ void FareyList::startBreadth(long num)
 	recursion();
 }
 
+void FareyList::startIterAtion(long num)
+{
+	maxNum = num;
+	list.makeEmpty();
+	list << Fraction{ 0,1 } << Fraction{ 1,maxNum };
+	ListNode<Fraction>* a, *b;
+	a = list.getFirst();
+	b = a->link;
+
+	while (b->date.d != 1) {
+		int x = (a->date.d + num) / b->date.d;
+		list.append(Fraction{ b->date.n*x - a->date.n,b->date.d*x - a->date.d });
+		a = b;
+		b = b->link;
+	}
+	return;
+}
+
 void FareyList::recursion(ListNode<Fraction>* a, ListNode<Fraction>* b)
 {
 	if ((a->date.d + b->date.d)> maxNum)
@@ -62,7 +80,17 @@ void FareyList::recursion()
 
 void FareyList::output()
 {
-	list.output();
+	list.outMainMessage();
+}
+
+void FareyList::test()
+{
+	ListNode<Fraction>* node = list.getFirst();
+	while (node)
+	{
+		
+		
+	}
 }
 
 ostream & operator<<(ostream & os, Fraction & f)
