@@ -120,10 +120,20 @@ background-color: rgb(170, 255, 255);
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="fareylist.qrc">:/img/res/dog.jpg</pixmap>
+        <pixmap>:/img/res/dog.jpg</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">font: 10pt &quot;华康方圆体W7(P)&quot;;</string>
+       </property>
+       <property name="text">
+        <string>法雷序列</string>
        </property>
       </widget>
      </item>
