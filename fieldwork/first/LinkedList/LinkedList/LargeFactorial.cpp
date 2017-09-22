@@ -1,11 +1,13 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "LargeFactorial.h"
-
+#include<iostream>
+using namespace std;
 
 LargeFactorial::LargeFactorial(int l)
 {
 	list.append(1);
 	storeLong = pow(10, l);
+	length = l;
 }
 
 
@@ -15,46 +17,60 @@ LargeFactorial::~LargeFactorial()
 
 void LargeFactorial::start(int maxNum)
 {
+	list.makeEmpty();
+	list.append(1);
+	//高位在尾部
 	for (int i = 2; i <= maxNum; i++)
 	{
-		multiplication(i);
-	}
-}
-
-void LargeFactorial::multiplication(int num)
-{
-	ListNode<int>* item = list.getFirst();
-	while (item)
-	{
-		int n = item->date * num;
-		if (n >= storeLong) {
-			if (!item->link) {
-				list << 0;
+		DListNode<int>* node = list.getLast();       //用来计算的node
+		DListNode<int>* mNode;      //用来进位的node
+		while (node != list.getFirst()->LLink) {
+			long long n = node->date*i;
+			node->date = n%storeLong;
+			n = n / storeLong;
+			//如果需要进位的数非零的话
+			mNode = node->RLink;
+			//循环进位
+			while (n!=0) {
+				if (!mNode) {
+					list.append(0);
+					mNode = list.getLast();
+					mNode->date = n%storeLong;
+					n /= storeLong;
+				}
+				else {
+					mNode->date += n%storeLong;
+					n /= storeLong;
+				}
+				mNode = mNode->RLink;
 			}
-			item->link->date += (n / storeLong);
-			item->date = n%storeLong;
+
+			node = node->LLink;
 		}
-		else
-		{
-			item->date = n;
-		}
-		item = item->link;
 	}
+
 }
 
 void LargeFactorial::output()
 {
-	cout << list.getSize() << endl;
-	//return;
-	ListNode<int> *item = list.getFirst();
-	coutItem(item);
+	cout << list.getLast()->date;
+	coutItem(list.getLast()->LLink);
 }
 
-void LargeFactorial::coutItem(ListNode<int>* t)
+void LargeFactorial::coutItem(DListNode<int>* t)
 {
-	if (t) {
-		printf("%04d", t->date);
-		coutItem(t->link);
+	if (t!=list.getFirst()->LLink) {
+		cout.fill('0');
+		cout.width(length);
+		cout << t->date;
+		coutItem(t->LLink);
 	}
 	
 }
+
+int LargeFactorial::getSize()
+{
+	return list.getSize();
+}
+
+
