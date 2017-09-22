@@ -47,6 +47,7 @@ public:
 	ListNode<T>* getLast();
 	//
 	void output();
+	void outMainMessage();
 protected:
 	ListNode<T>* first;
 	ListNode<T>* last;
@@ -400,4 +401,18 @@ inline void SuperList<T>::output()
 		item = item->link;
 	}
 	cout << endl;
+}
+
+template<typename T>
+inline void SuperList<T>::outMainMessage()
+{
+	if (size == 0) {
+		cout << "这个链表，长度为：" << size << endl;
+		cout << "输出完毕" << endl;
+		return;
+	}
+	//在这里输入各种信息吧
+	cout << "这个链表，长度为：" << size << endl;
+	cout << "头节点的数据为： " << first->link->date << endl;
+	cout << "尾节点的数据为： " << last->date << endl;
 }
