@@ -40,8 +40,7 @@ template<typename T>
 T Stack<T>::pop()
 {
     if(list.empty()){
-        qDebug()<<"栈为空，无法出栈";
-        throw "error";
+        throw QString("栈为空,无法出栈顶");
     }
     else{
         T t=list.getLast()->date;

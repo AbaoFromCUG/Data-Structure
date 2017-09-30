@@ -37,6 +37,34 @@ double Caculator::startRunning(QString str)
             }
 
             else if (IsOperator(c)) {
+                if(c=='('&&str[k]=='-'){
+                    /*
+                     * 如果遇到(, 且它后面一个符号是负号时,
+                     * 则直接运行到负数完,
+                     * 且仅仅支持(-12)类型的符号
+                     */
+                    k++;
+                    c=str[k].toLatin1();
+                    QString cache("-");
+                    while(c<='9'&&c>='0'||c=='.'){
+                        cache.append(c);
+                        c=str[++k].toLatin1();
+                    }
+                    if(c!=')'){
+                        //如果将负号后面一个数字扫描完毕,但是后面的不是)的话
+                        //非法
+                        throw QString("负数表示非法");
+                    }else {
+                        if(cache.count('.')<=1){
+                            numStack.push(cache.toDouble());
+                            c=str[k++].toLatin1();
+                        }else {
+                            throw QString("非法,一个数据含有两个小数点") ;
+                        }
+                    }
+                    continue;
+
+                }
 
 
                 qDebug()<<c<<"   "<<getMap(c,optStack.top());
@@ -98,6 +126,11 @@ double Caculator::startRunning(QString str)
 
                     }
                     optStack.pop();
+                    if(numStack.getLength()!=1){
+                        throw QString("符号不匹配,非法");
+                    }else {
+                        return numStack.pop();
+                    }
                     break;
                 }
                 default:
@@ -120,10 +153,17 @@ double Caculator::startRunning(QString str)
 
 
 
-    }catch(QString str){
-        qDebug()<<str;
     }
+    catch(QString str){
+        throw str;
+    }catch(...){
+        qDebug()<<"遇到不知名错误";
+    }
+    return 0;
+
+
 }
+
 
 bool Caculator::legitimate(QString expression)
 {
