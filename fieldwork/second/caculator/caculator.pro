@@ -1,15 +1,15 @@
-QT += core
-QT -= gui
+QT += quick
 QT += qml
-QT +=quick
+
+
 
 CONFIG += c++11
 
-TARGET = caculator
-CONFIG += console
-CONFIG -= app_bundle
+#TARGET = caculator
+#CONFIG += console
+#CONFIG -= app_bundle
 
-TEMPLATE = app
+##TEMPLATE = app
 
 SOURCES += main.cpp \
     caculator.cpp \
@@ -38,4 +38,11 @@ HEADERS += \
     lib/qml/windowhandler.h
 
 RESOURCES += \
-    qml.qrc
+    qml.qrc \
+    res.qrc
+
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

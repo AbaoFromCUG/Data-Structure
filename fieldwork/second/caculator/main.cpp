@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<FramelessWindowHelper>("FramelessWindowHelper", 1, 0, "FramelessWindowHelper");
     QQmlApplicationEngine engine;
-      engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
-      if (engine.rootObjects().isEmpty())
-          return -1;
-    return 0;
+    if (engine.rootObjects().isEmpty())
+        return -1;
+    return app.exec();
 }
