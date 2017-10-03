@@ -1,5 +1,7 @@
 QT += core
 QT -= gui
+QT += qml
+QT +=quick
 
 CONFIG += c++11
 
@@ -10,7 +12,9 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    caculator.cpp
+    caculator.cpp \
+    lib/qml/framelesswindowhelper.cpp \
+    lib/qml/windowhandler.cpp
 
 # 预编译头文件
 PRECOMPILED_HEADER = stable.h
@@ -29,5 +33,9 @@ HEADERS += \
     caculator.h \
     list/stack.h \
     stable.h \
-    list/doubleList.h
+    list/doubleList.h \
+    lib/qml/framelesswindowhelper.h \
+    lib/qml/windowhandler.h
 
+RESOURCES += \
+    qml.qrc

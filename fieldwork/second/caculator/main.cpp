@@ -1,30 +1,21 @@
 #include"list/stack.h"
 #include"stable.h"
-#include<iostream>
 #include"stack"
 #include"caculator.h"
+#include"lib/qml/framelesswindowhelper.h"
 
 
 int main(int argc, char *argv[])
 {
-    //QCoreApplication a(argc, argv);
-    //return a.exec();
-    Caculator cc;
-    while (true) {
-        std::string str;
-        qDebug()<<"请输入你要计算的表达式";
-        std::cin>>str;
-        try{
-            qDebug()<<cc.startRunning(QString(str.c_str()));
-        }catch(char* cc){
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+    QGuiApplication app(argc,argv);
 
+    qmlRegisterType<FramelessWindowHelper>("FramelessWindowHelper", 1, 0, "FramelessWindowHelper");
+    QQmlApplicationEngine engine;
+      engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
-            //qDebug()<<cc;
-        }catch(QString str){
-            qDebug()<<str;
-        }
-
-
-    }
+      if (engine.rootObjects().isEmpty())
+          return -1;
     return 0;
 }
