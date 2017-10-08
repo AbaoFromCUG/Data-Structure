@@ -13,6 +13,7 @@ public:
     T top();
     bool empty();
     int getLength();
+    void clear();
 protected:
     DoublyList<T> list;
 };
@@ -22,6 +23,7 @@ Stack<T>::Stack()
 
 
 }
+
 
 template<typename T>
 Stack<T>::~Stack()
@@ -72,6 +74,13 @@ template<typename T>
 int Stack<T>::getLength()
 {
     return list.getSize();
+
+}
+
+template<typename T>
+void Stack<T>::clear()
+{
+    list.makeEmpty();
 
 }
 

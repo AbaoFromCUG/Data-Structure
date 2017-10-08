@@ -3,6 +3,7 @@
 #include"stack"
 #include"caculator.h"
 #include"lib/qml/framelesswindowhelper.h"
+#include"caculator.h"
 
 
 int main(int argc, char *argv[])
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc,argv);
 
     qmlRegisterType<FramelessWindowHelper>("FramelessWindowHelper", 1, 0, "FramelessWindowHelper");
+    qmlRegisterType<Caculator>("Caculator.abaopro.me",1,0,"Caculator");
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 

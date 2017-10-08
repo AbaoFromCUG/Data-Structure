@@ -13,11 +13,28 @@
 
 class Caculator:public QObject
 {
+    Q_OBJECT
+    Q_PROPERTY(bool unDoable READ unDoable WRITE setUnDoable NOTIFY unDoableChanged)
+    Q_PROPERTY(bool reDoable READ reDoable WRITE setReDoable NOTIFY reDoableChanged)
 public:
     Caculator(QObject* parent=NULL);
     ~Caculator();
-    double startRunning(QString str);       //计算函数
 
+
+
+    bool unDoable();
+    void setUnDoable(bool arg);
+    bool reDoable();
+    void setReDoable(bool arg);
+public slots:
+    void addDo(QString str);
+    QString getShowText();
+    void startRunning();       //计算函数
+    QString getRunText();
+signals:
+    void runOver(int s,QString result);
+    void unDoableChanged(bool arg);
+    void reDoableChanged(bool arg);
 protected:
     bool legitimate(QString expression);//判断两边带#号的表达式是否合法
     bool IsOperator(char c);            //判断一个字符是不是运算符号
@@ -27,7 +44,11 @@ protected:
     int getMap(char x, char y);
 
 
-
+private:
+    Stack<QString> unStack;
+    Stack<QString> reStack;
+    bool m_unDoable;
+    bool m_reDoable;
 
     int optMap[7][7]={
       /*

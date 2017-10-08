@@ -2,8 +2,8 @@
 Caculator::Caculator(QObject *parent):
     QObject(parent)
 {
-
-
+    setUnDoable(false);
+    setReDoable(false);
 }
 
 Caculator::~Caculator()
@@ -11,8 +11,114 @@ Caculator::~Caculator()
 
 }
 
-double Caculator::startRunning(QString str)
+QString Caculator::getShowText()
 {
+    QString allStr;
+    Stack<QString> midStack=unStack;
+    Stack<QString> midStack2;
+    while (!midStack.empty()) {
+        midStack2.push(midStack.pop());
+    }
+    while (!midStack2.empty()) {
+        //+-x/ . sin x²÷ UnDo Clear ReDo √
+        QString str=midStack2.pop();
+        if (str=="x²") {
+            allStr.append("²");
+        }else if (str=="÷") {
+            allStr.append("/");
+        }else {
+            allStr.append(str);
+        }
+
+    }
+
+    return allStr;
+
+}
+
+bool Caculator::unDoable()
+{
+    return m_unDoable;
+}
+
+void Caculator::setUnDoable(bool arg)
+{
+    if(arg==m_unDoable)
+        return;
+    m_unDoable=arg;
+    emit unDoableChanged(arg);
+}
+
+bool Caculator::reDoable()
+{
+    return m_reDoable;
+}
+
+void Caculator::setReDoable(bool arg)
+{
+    if(arg==m_reDoable)
+        return;
+    m_reDoable=arg;
+    emit reDoableChanged(arg);
+}
+
+void Caculator::addDo(QString str)
+{
+    if(str=="=")
+    {
+        connect(this,&Caculator::runOver,[=](int status,QString str){
+            unStack.clear();
+            reStack.clear();
+            setUnDoable(true);
+            setReDoable(false);
+            if(status==0){
+                foreach (auto c, str) {
+                    unStack.push(QString(c));
+                }
+            }
+        });
+        startRunning();
+
+        return;
+    }else if (str=="UnDo") {
+        //
+        if(unDoable()){
+            reStack.push(unStack.pop());
+            setReDoable(true);
+        }else{
+            qDebug()<<"Can't ReDo";
+            //error;
+        }
+        if(unStack.empty()){
+            setUnDoable(false);
+        }
+    }else if (str=="ReDo"){
+        if(reDoable()){
+            unStack.push(reStack.pop());
+            setUnDoable(true);
+        }else {
+            //error
+        }
+        if(reStack.empty()){
+            setReDoable(false);
+        }
+    }else if (str=="Clear") {
+        setUnDoable(false);
+        setReDoable(false);
+        unStack.clear();
+        reStack.clear();
+    }else {
+        unStack.push(str);
+        if(!unDoable()){
+            setUnDoable(true);
+        }
+    }
+
+}
+
+void Caculator::startRunning()
+{
+    QString str=getRunText();
     try{
         Stack<char> optStack;
         Stack<double> numStack;
@@ -31,7 +137,8 @@ double Caculator::startRunning(QString str)
                 if(cache.count('.')<=1){
                     numStack.push(cache.toDouble());
                 }else {
-                    throw QString("非法,一个数据含有两个小数点") ;
+
+                    emit runOver( 1,"非法,一个数据含有两个小数点") ;
                 }
                 continue;
             }
@@ -53,13 +160,14 @@ double Caculator::startRunning(QString str)
                     if(c!=')'){
                         //如果将负号后面一个数字扫描完毕,但是后面的不是)的话
                         //非法
-                        throw QString("负数表示非法");
+                        emit (1,"负数表示非法");
+                        return;
                     }else {
                         if(cache.count('.')<=1){
                             numStack.push(cache.toDouble());
                             c=str[k++].toLatin1();
                         }else {
-                            throw QString("非法,一个数据含有两个小数点") ;
+                            emit runOver(1,"非法,一个数据含有两个小数点") ;
                         }
                     }
                     continue;
@@ -127,10 +235,17 @@ double Caculator::startRunning(QString str)
                     }
                     optStack.pop();
                     if(numStack.getLength()!=1){
-                        throw QString("符号不匹配,非法");
+                        emit runOver(1,"符号不匹配,非法");
+                        return;
                     }else {
-                        return numStack.pop();
+                        emit runOver(0,QString::number(numStack.pop()));
+                        return ;
                     }
+                    break;
+                }
+
+                case 5:{
+                    emit runOver(1,"符号不匹配,非法");
                     break;
                 }
                 default:
@@ -142,8 +257,9 @@ double Caculator::startRunning(QString str)
                 /*
                  * 既不是数字也不是运算符号,所以输入非法,
                  * 先抛个异常
-                 */\
-                 throw QString("error ,含有非运算符号的符号");
+                 */
+                emit runOver(1,"含有非运算符号的符号");
+                return;
             }
             c=str[k++].toLatin1();
 
@@ -155,13 +271,43 @@ double Caculator::startRunning(QString str)
 
     }
     catch(QString str){
-        throw str;
+        emit runOver(1,str);
     }catch(...){
-        qDebug()<<"遇到不知名错误";
+        emit runOver(1,"遇到不知名错误");
     }
-    return 0;
 
 
+}
+
+QString Caculator::getRunText()
+{
+    QString allStr;
+    Stack<QString> midStack=unStack;
+    Stack<QString> midStack2;
+    while (!midStack.empty()) {
+        midStack2.push(midStack.pop());
+    }
+    while (!midStack2.empty()) {
+        //+-x/ . sin x²÷ UnDo Clear ReDo √
+        QString str=midStack2.pop();
+        if(str=="sin"||str=="cos"||str=="tan"){
+            allStr.append(str[0]);
+        }else if(str=="x"){
+            allStr.append("*");
+        }else if (str=="x²") {
+            allStr.append("^2");
+        }else if (str=="÷") {
+            allStr.append("/");
+        }else if (str=="√") {
+            allStr.append("r");
+        }else {
+            allStr.append(str);
+        }
+
+    }
+
+
+    return allStr;
 }
 
 
@@ -236,7 +382,7 @@ double Caculator::calculate(double num1, char opt, double num2)
         return QString("%1.%2").arg((int)num1).arg((int)num2).toDouble();
     case '/':
         if(abs(num2)<0.00000001){
-            throw QString("被除数不能为零");
+            emit runOver(1, "被除数不能为零");
         }
         return num1/num2;
         break;

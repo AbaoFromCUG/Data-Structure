@@ -22,6 +22,7 @@ class DoublyList
 {
 public:
 	DoublyList();
+    DoublyList(DoublyList<T>& old);   //
 	virtual ~DoublyList();
 	bool prepend(T t);		//在头上插入
 	bool append(T t);		//在尾部追加
@@ -48,7 +49,25 @@ inline DoublyList<T>::DoublyList()
 {
 	first = new DListNode<T>;
 	last = first;
-	size = 0;
+    size = 0;
+}
+
+template<typename T>
+DoublyList<T>::DoublyList(DoublyList<T> &old)
+{
+    first=new DListNode<T>;
+    last=first;
+    size=old.getSize();
+
+    DListNode<T> *p=old.getFirst();
+    DListNode<T> *m=first;
+    while (p) {
+        m->RLink=new DListNode<T>(p->date);
+        m->RLink->LLink=m;
+        m=m->RLink;
+        p=p->RLink;
+    }
+    last=m;
 }
 
 template<typename T>
@@ -78,8 +97,9 @@ inline bool DoublyList<T>::prepend(T t)
 template<typename T>
 inline bool DoublyList<T>::append(T t)
 {
+    //if(first==last)
     DListNode<T>* newNode = new DListNode<T>(t, last, nullptr);
-	last->RLink = newNode;
+    last->RLink = newNode;
 	last = last->RLink;
 	size++;
 	return false;

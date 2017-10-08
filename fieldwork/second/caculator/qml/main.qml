@@ -1,19 +1,48 @@
-import QtQuick 2.7
+import QtQuick 2.0
 import FramelessWindowHelper 1.0
 import QtQuick.Window 2.3
-import QtQuick.Layouts 1.3
-
+import QtQuick.Controls 1.5
+import QtQuick.Controls.Styles.Breeze 1.0
+import Caculator.abaopro.me 1.0
 Window {
     id: root
     width: 400;
     height: 300;
-    color: "#6aacf1"
+    color: "#EEEEE0"
     visible: true;
     flags: Qt.WindowTitleHint
     title: ("caculator")
+    minimumHeight: 300
+    minimumWidth: 400
     FramelessWindowHelper{
 
 
+    }
+    Timer{
+        id:clearTextTimer
+        //Timer还提供了一些函数，如restart()、start()和stop()等
+        interval: 1000; running:false; repeat:true
+        onTriggered: showText.text=""
+    }
+    Caculator{
+        id:cac
+        onRunOver: {
+            console.log(s,result)
+            if(s!=0){
+                showText.text=cac.getShoText();
+                clearTextTimer.start()
+            }
+
+
+        }
+
+
+
+        function dealBtnClicked(s){
+            cac.addDo(s)
+            console.log(s);
+            showText.text=cac.getShowText();
+        }
     }
 
     Rectangle {
@@ -166,31 +195,94 @@ Window {
 
     }
 
-    GridLayout {
-        id: gridLayout
-        x: 156
-        width: 244
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 96
+    Rectangle {
+        id: textEdit
+        width: root.width>900?700:root.width*2/3
+        anchors.top: titleBar.bottom
+        anchors.topMargin: 5
         anchors.right: parent.right
-        anchors.rightMargin: 0
+        anchors.rightMargin: 5
+
+
+        height: showText.height
+        color: "#b0b0b0"
+        radius: 5
+        border.color: "#00000000"
+        border.width: 3
+
+        Text {
+            id: showText
+            text: qsTr("")
+            font.bold: false
+            width: parent.width
+            color: "#ffffff"
+
+            styleColor: "#e9d4d4"
+            wrapMode: Text.WrapAnywhere
+            font.pixelSize: 20
+        }
     }
 
-    TextEdit {
-        id: textEdit
-        text: qsTr("Text Edit")
-        anchors.left: gridLayout.left
+    Flow {
+        id: flow1
+        spacing: 5
         anchors.leftMargin: 0
-        anchors.bottom: gridLayout.top
-        anchors.bottomMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 52
+        anchors.top: textEdit.bottom
         anchors.right: parent.right
-        anchors.rightMargin: 0
-        font.pixelSize: 12
+        anchors.bottom: parent.bottom
+        anchors.left: textEdit.left
+        anchors.topMargin: 5
+
+        Repeater{
+            delegate:btn
+            anchors.fill: parent
+
+            model: ListModel{
+                id:m_model
+                /*
+                 * 1    2   3
+                  */
+ListElement{m_text:"1"}ListElement{m_text:"2"}ListElement{m_text:"3"}ListElement{m_text:"UnDo"}ListElement{m_text:"Clear"}ListElement{m_text:"ReDo"}
+ListElement{m_text:"4"}ListElement{m_text:"5"}ListElement{m_text:"6"}ListElement{m_text:"("}ListElement{m_text:"%"}ListElement{m_text:")"}
+ListElement{m_text:"7"}ListElement{m_text:"8"}ListElement{m_text:"9"}ListElement{m_text:"sin"}ListElement{m_text:"cos"}ListElement{m_text:"tan"}
+ListElement{m_text:"+"}ListElement{m_text:"0"}ListElement{m_text:"-"}ListElement{m_text:"^"}ListElement{m_text:"e"}ListElement{m_text:"√"}
+ListElement{m_text:"x"}ListElement{m_text:"."}ListElement{m_text:"÷"}ListElement{m_text:"x²"}ListElement{m_text:"=";m_widthS:true}
+
+
+            }
+        }
     }
+
+    Component{
+        id:btn
+        Button{
+            property bool widthS:m_widthS;
+            width: widthS?(flow1.width-30)/3+5:(flow1.width-30)/6
+            height: (flow1.height-25)/5
+            text:m_text
+            onClicked:cac.dealBtnClicked(text)
+
+            style: ButtonStyle{
+
+                background: Rectangle{
+                    border.width: 0
+                    anchors.fill: parent
+                    radius:  4
+
+                    gradient: Gradient {
+                        GradientStop { position: 0 ; color: control.pressed ? "#B0E0E6" : "#87CEFA" }
+                        GradientStop { position: 0.85 ; color: control.pressed ? "#B0E0E6" : "#87CEFA" }
+                        GradientStop { position: 1 ; color: control.pressed ? "#B0E0E6" : "#BDBDBD" }
+                    }
+                }
+            }
+
+
+        }
+    }
+
+
+
 
 
 
