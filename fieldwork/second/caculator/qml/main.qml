@@ -21,16 +21,19 @@ Window {
     Timer{
         id:clearTextTimer
         //Timer还提供了一些函数，如restart()、start()和stop()等
-        interval: 1000; running:false; repeat:true
+        interval: 1000; running:false; repeat:false
         onTriggered: showText.text=""
     }
     Caculator{
         id:cac
         onRunOver: {
             console.log(s,result)
+             showText.text=result;
             if(s!=0){
-                showText.text=cac.getShoText();
+
                 clearTextTimer.start()
+            }else{
+                //showText.text=cac.getShowText();
             }
 
 
@@ -39,6 +42,7 @@ Window {
 
 
         function dealBtnClicked(s){
+
             cac.addDo(s)
             console.log(s);
             showText.text=cac.getShowText();

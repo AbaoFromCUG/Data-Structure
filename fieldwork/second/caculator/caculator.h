@@ -49,6 +49,8 @@ private:
     Stack<QString> reStack;
     bool m_unDoable;
     bool m_reDoable;
+    bool helpArg=true;
+
 
     int optMap[7][7]={
       /*

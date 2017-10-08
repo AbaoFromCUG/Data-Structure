@@ -140,10 +140,15 @@ void Caculator::startRunning()
 
                     emit runOver( 1,"非法,一个数据含有两个小数点") ;
                 }
+                helpArg=true;
                 continue;
             }
 
             else if (IsOperator(c)) {
+                //a bug
+                if(c=='s'||c=='c'||c=='t'){
+                    helpArg=false;
+                }
                 if(c=='('&&str[k]=='-'){
                     /*
                      * 如果遇到(, 且它后面一个符号是负号时,
@@ -237,7 +242,10 @@ void Caculator::startRunning()
                     if(numStack.getLength()!=1){
                         emit runOver(1,"符号不匹配,非法");
                         return;
-                    }else {
+                    }else if(!helpArg){
+                        emit runOver(1,"符号不匹配,非法");
+                        return;
+                    }else{
                         emit runOver(0,QString::number(numStack.pop()));
                         return ;
                     }
