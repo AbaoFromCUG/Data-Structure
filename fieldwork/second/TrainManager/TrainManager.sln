@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TrainManager", "TrainManager\TrainManager.vcxproj", "{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Debug|x64.ActiveCfg = Debug|x64
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Debug|x64.Build.0 = Debug|x64
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Debug|x86.ActiveCfg = Debug|Win32
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Debug|x86.Build.0 = Debug|Win32
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Release|x64.ActiveCfg = Release|x64
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Release|x64.Build.0 = Release|x64
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Release|x86.ActiveCfg = Release|Win32
+		{C29D7682-D0CE-4244-8197-6A5B9F5CB35B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E5A5CBB-6D20-4CCF-8E5A-C59FD72C8651}
+	EndGlobalSection
+EndGlobal

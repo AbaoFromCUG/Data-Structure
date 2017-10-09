@@ -2,7 +2,8 @@ import QtQuick 2.0
 import FramelessWindowHelper 1.0
 import QtQuick.Window 2.3
 import QtQuick.Controls 1.5
-import QtQuick.Controls.Styles.Breeze 1.0
+//import QtQuick.Controls.Styles.Breeze 1.0
+import QtQuick.Controls.Styles 1.4
 import Caculator.abaopro.me 1.0
 Window {
     id: root
@@ -68,7 +69,17 @@ Window {
             height: 26
             source: "qrc:/res/dog.jpg"
         }
+        Text {
+            id: titeleText
+            text: qsTr("计算器")
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: image.right;
+            anchors.leftMargin: 5
+            font.pixelSize: 15
 
+
+            font.bold: true;
+        }
         Rectangle {
             id: closeBtn
             x: 360
@@ -223,7 +234,7 @@ Window {
 
             styleColor: "#e9d4d4"
             wrapMode: Text.WrapAnywhere
-            font.pixelSize: 20
+            font.pixelSize: 30
         }
     }
 
@@ -246,7 +257,7 @@ Window {
                 /*
                  * 1    2   3
                   */
-ListElement{m_text:"1"}ListElement{m_text:"2"}ListElement{m_text:"3"}ListElement{m_text:"UnDo"}ListElement{m_text:"Clear"}ListElement{m_text:"ReDo"}
+ListElement{m_text:"1"}ListElement{m_text:"2"}ListElement{m_text:"3"}ListElement{m_text:"←"}ListElement{m_text:"C"}ListElement{m_text:"→"}
 ListElement{m_text:"4"}ListElement{m_text:"5"}ListElement{m_text:"6"}ListElement{m_text:"("}ListElement{m_text:"%"}ListElement{m_text:")"}
 ListElement{m_text:"7"}ListElement{m_text:"8"}ListElement{m_text:"9"}ListElement{m_text:"sin"}ListElement{m_text:"cos"}ListElement{m_text:"tan"}
 ListElement{m_text:"+"}ListElement{m_text:"0"}ListElement{m_text:"-"}ListElement{m_text:"^"}ListElement{m_text:"e"}ListElement{m_text:"√"}
@@ -260,6 +271,7 @@ ListElement{m_text:"x"}ListElement{m_text:"."}ListElement{m_text:"÷"}ListElemen
     Component{
         id:btn
         Button{
+            id:b;
             property bool widthS:m_widthS;
             width: widthS?(flow1.width-30)/3+5:(flow1.width-30)/6
             height: (flow1.height-25)/5
@@ -278,11 +290,33 @@ ListElement{m_text:"x"}ListElement{m_text:"."}ListElement{m_text:"÷"}ListElemen
                         GradientStop { position: 0.85 ; color: control.pressed ? "#B0E0E6" : "#87CEFA" }
                         GradientStop { position: 1 ; color: control.pressed ? "#B0E0E6" : "#BDBDBD" }
                     }
+
+                }
+                label: Text{
+                    renderType: Text.NativeRendering
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.family: "Helvetica"
+                    font.pointSize: 20
+                    color: "blue"
+                    text: control.text
                 }
             }
 
 
         }
+    }
+
+    Image {
+        id: image1
+        y: 185
+        width: 122
+        height: 115
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        source: "../res/redCat.png"
     }
 
 

@@ -20,7 +20,7 @@ QString Caculator::getShowText()
         midStack2.push(midStack.pop());
     }
     while (!midStack2.empty()) {
-        //+-x/ . sin x²÷ UnDo Clear ReDo √
+        //+-x/ . sin x²÷ ← Clear → √
         QString str=midStack2.pop();
         if (str=="x²") {
             allStr.append("²");
@@ -80,7 +80,7 @@ void Caculator::addDo(QString str)
         startRunning();
 
         return;
-    }else if (str=="UnDo") {
+    }else if (str=="←") {
         //
         if(unDoable()){
             reStack.push(unStack.pop());
@@ -92,7 +92,7 @@ void Caculator::addDo(QString str)
         if(unStack.empty()){
             setUnDoable(false);
         }
-    }else if (str=="ReDo"){
+    }else if (str=="→"){
         if(reDoable()){
             unStack.push(reStack.pop());
             setUnDoable(true);
@@ -102,7 +102,7 @@ void Caculator::addDo(QString str)
         if(reStack.empty()){
             setReDoable(false);
         }
-    }else if (str=="Clear") {
+    }else if (str=="C") {
         setUnDoable(false);
         setReDoable(false);
         unStack.clear();
@@ -296,7 +296,7 @@ QString Caculator::getRunText()
         midStack2.push(midStack.pop());
     }
     while (!midStack2.empty()) {
-        //+-x/ . sin x²÷ UnDo Clear ReDo √
+        //+-x/ . sin x²÷ ← Clear ReDo √
         QString str=midStack2.pop();
         if(str=="sin"||str=="cos"||str=="tan"){
             allStr.append(str[0]);
