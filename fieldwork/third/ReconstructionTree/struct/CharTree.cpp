@@ -9,6 +9,11 @@ CharTree::~CharTree()
 {
 }
 
+TreeNode<char> *CharTree::getRootNode()
+{
+    return root;
+}
+
 void CharTree::getTree(string str, int model)
 {
 	this->clear();
@@ -223,6 +228,13 @@ TreeNode<char>* CharTree::find(char key)
 
 }
 
+string CharTree::getFloorOut()
+{
+    return string();
+
+}
+
+
 TreeNode<char> *CharTree::reconSonTree(QString str1, QString str2)
 {
     if(str1.isEmpty())
@@ -232,7 +244,7 @@ TreeNode<char> *CharTree::reconSonTree(QString str1, QString str2)
     if(!list.at(0).isEmpty()){
         node->lNode=reconSonTree(str1.mid(1),list.at(0));
     }
-    if(!list.at(1).isEmpty()){
+    if(list.length()==2&&!list.at(1).isEmpty()){
         node->rNode=reconSonTree(str1.mid(1),list.at(1));
     }
     return node;

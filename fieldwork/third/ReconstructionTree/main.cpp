@@ -1,13 +1,11 @@
-#include <QCoreApplication>
 #include<struct/CharTree.h>
+#include"mainwindow.h"
+#include<QApplication>
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    CharTree s;
-    /*
-     * 前序列  ABCDEGF
-     *中序列  CBEGDFA
-     */
-    s.reconstruction("ABCDEGF","CBEGDFA");
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
     return a.exec();
 }

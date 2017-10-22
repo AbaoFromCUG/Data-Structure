@@ -1,16 +1,17 @@
-QT += core
-QT -= gui
-
+QT       += core gui
 CONFIG += c++11
 
 TARGET = ReconstructionTree
-CONFIG += console
-CONFIG -= app_bundle
-
 TEMPLATE = app
 
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 SOURCES += main.cpp \
-    struct/CharTree.cpp
+    struct/CharTree.cpp \
+    mainwindow.cpp \
+    lib/framlessHelper/qwidget/framelesshelper.cpp \
+    loghelper.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -28,4 +29,14 @@ HEADERS += \
     struct/CharTree.h \
     struct/doubleList.h \
     struct/myQueue.h \
-    struct/stack.h
+    struct/stack.h \
+    mainwindow.h \
+    lib/framlessHelper/qwidget/framelesshelper.h \
+    loghelper.h
+
+FORMS += \
+    mainwindow.ui
+
+RESOURCES += \
+    res.qrc
+

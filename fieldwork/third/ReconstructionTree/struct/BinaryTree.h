@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"myQueue.h"
 template<typename T>
 struct TreeNode{
 	TreeNode<T>* rNode;
@@ -29,8 +30,10 @@ public:
 	TreeNode<T> *find(T key);
 	bool appendOneNode(TreeNode<T>* parent, T t, Direction dir);
 	bool insertAfter(TreeNode<T>* parent, T t, Direction dir,Direction mvDir);
-	bool doSomeThing(int model,void(*visit)(TreeNode<T> *t));  //一个用来遍历的函数 1, 代表前序，2代表中序，3代表后序
-	
+    //一个用来遍历的函数 1, 代表前序，2代表中序，3代表后序
+    bool doSomeThing(int model,void(*visit)(TreeNode<T> *t));
+    //一个用来遍历的函数代表层序
+    bool doSomeThing(void(*visit)(TreeNode<T> *t,int nfl));
 	void clear(); //清空一个二叉树
 
 	void deleteSonTree(TreeNode<T>* node);
@@ -157,6 +160,8 @@ inline bool BinaryTree<T>::insertAfter(TreeNode<T>* parent, T t, Direction dir, 
 template<typename T>
 inline bool BinaryTree<T>::doSomeThing(int model, void(*visit)(TreeNode<T>*t))
 {
+    if(!root)
+        return false;
 	tempVisit = visit;
 	if (model == 1) {
 		recursiveDo1(root);
@@ -166,8 +171,48 @@ inline bool BinaryTree<T>::doSomeThing(int model, void(*visit)(TreeNode<T>*t))
 	}else if (model==3)
 	{
 		recursiveDo3(root);
-	}
-	return true;
+    }
+    return true;
+}
+
+template<typename T>
+bool BinaryTree<T>::doSomeThing(void (*visit)(TreeNode<T> *t, int num))
+{
+    //由于是层次遍历
+    /*
+     *
+     * 但是正常的广度优先的搜索算法,
+     * 又没有办法知道深度
+     */
+    if(root){
+        return false;
+    }
+    MyQueue<TreeNode<T>*> *q=new MyQueue<TreeNode<char>*>;
+    MyQueue<TreeNode<T>*> *p=new MyQueue<TreeNode<char>*>;
+    p->inQueue(root);  //p是入队的队列,q是出队列的队列
+    int floorNum=0; //第几层
+    visit(root,floorNum);
+    floorNum++;
+    while (!p->empty()) {
+        TreeNode<char>* mid=p;
+        p=q;
+        q=mid;
+        while(!q->empty()) {
+            TreeNode<char>* node=q->outQueue();
+            if(node->lNode){
+                p->inQueue(node->lNode);
+                visit(node->lNode,floorNum);
+            }
+            if(node->rNode){
+                p->inQueue(node->rNode);
+                visit(node->rNode,floorNum);
+            }
+        }
+        floorNum++;
+    }
+    delete p;
+    delete q;
+    return true;
 }
 
 template<typename T>
@@ -186,8 +231,7 @@ inline void BinaryTree<T>::deleteSonTree(TreeNode<T>* node)
 	 */
 	if(node->lNode)deleteSonTree(node->lNode);
 	if(node->rNode)deleteSonTree(node->rNode);
-	delete node;
-	node = nullptr;
+    delete node;
 }
 
 template<typename T>
