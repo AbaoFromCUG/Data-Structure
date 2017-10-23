@@ -45,11 +45,10 @@ private slots:
     void on_btn_refrer_clicked();
 
     void on_btn_saveImg_clicked();
-
+    void initPixmap();
     void updatePixmap();        //更新二叉树的图像
     void paintDirLine(QPoint start,QPoint end);
     void paintCircle(QPoint center,QChar c);
-
     //绘制子树,传入子树根节点的位置,以及根节点的层数
     void  paintSonTree(TreeNode<char>* node, int x,int l);
 private:
@@ -62,8 +61,8 @@ private:
     int fontSize=15;
     int rootSpace=20;//根节点上方空出的位置
     int imgWidth=2000;
-    int imgHeight=1000;
-    double rowSpace=60;
+    int imgHeight=700;
+    double rowSpace=100;
     double columnSpace[6]={500,250,125,62.5,31,16};
 protected:
     void paintEvent(QPaintEvent *event);

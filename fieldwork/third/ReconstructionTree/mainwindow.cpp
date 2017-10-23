@@ -95,6 +95,7 @@ void MainWindow::on_btn_front_clicked()
     }catch(...){
         logHelper->outErr("遇到不知名错误");
     }
+    initPixmap();
     logHelper->outLog("前序生成二叉树,输入的序列是"+str);
     updatePixmap();
 
@@ -102,7 +103,21 @@ void MainWindow::on_btn_front_clicked()
 
 void MainWindow::on_btn_layout_clicked()
 {
-
+    QString str=ui->input_tree->toPlainText();
+    str.remove(QRegExp("\\s"));  //过滤所有的空白符号
+    if(str.isEmpty()){
+        logHelper->outWarm("你输入的序列不合法");
+        return;
+    }
+    try{
+        myTree.getTree(str.toStdString(),2);
+    }catch(char* error){
+        logHelper->outErr(error);
+    }catch(...){
+        logHelper->outErr("遇到不知名错误");
+    }
+    logHelper->outLog("层序生成二叉树,输入的序列是"+str);
+    updatePixmap();
 }
 
 void MainWindow::on_btn_find_clicked()
@@ -126,19 +141,37 @@ void MainWindow::on_btn_saveImg_clicked()
 
 }
 
+void MainWindow::initPixmap()
+{
+    pixMap=QPixmap(imgWidth,imgHeight);
+    picLabel->setPixmap(pixMap);
+}
+
 void MainWindow::updatePixmap()
 {
     pixMap=QPixmap(imgWidth,imgHeight);
     if(!myTree.getRootNode()){
-        picLabel->setPixmap(pixMap);
         return;
     }
-    //绘制根节点
-    //paintCircle(QPoint(imgWidth/2,rootSpace),myTree.getRootNode()->data,pixmap);
     paintSonTree(myTree.getRootNode(),imgWidth/2,0);
     picLabel->setPixmap(pixMap);
+    return;
+    try{
+        paintSonTree(myTree.getRootNode(),imgWidth/2,0);
+    }catch(const char* str){
+        logHelper->outWarm(str);
+        initPixmap();
+        return;
+    }catch(...){
+        logHelper->outErr("不知名错误");
+        initPixmap();
+        return;
+    }
 
-    ui->showScroll->verticalScrollBar()->setSliderPosition(imgWidth/2);
+    picLabel->setPixmap(pixMap);
+
+    ui->showScroll->verticalScrollBar()->setSliderPosition(imgHeight/2);
+    ui->showScroll->horizontalScrollBar()->setSliderPosition(imgWidth/2);
 
 
 
@@ -190,7 +223,7 @@ void MainWindow::paintCircle(QPoint center, QChar c)
     painter.setFont(QFont("Arial",fontSize,QFont::Bold,true));
     painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
     painter.drawEllipse(center,circleR,circleR);
-    QRect rect(center.x()-circleR/2,center.y()-circleR/2,circleR,circleR);
+    QRect rect(center.x()-circleR,center.y()-circleR,circleR*2,circleR*2);
     painter.drawText(rect,Qt::AlignCenter,c);
 
 
@@ -198,6 +231,9 @@ void MainWindow::paintCircle(QPoint center, QChar c)
 
 void MainWindow::paintSonTree(TreeNode<char> *node, int x, int l)
 {
+    if(l>6){
+        throw "对不起，你所输入的序列太深，所以无法进行显示";
+    }
     paintCircle(QPoint(x,l*rowSpace+rootSpace),node->data);
     if(node->lNode){
         paintDirLine(QPoint(x,l*rowSpace+rootSpace),QPoint(x-columnSpace[l],(l+1)*rowSpace+rootSpace));

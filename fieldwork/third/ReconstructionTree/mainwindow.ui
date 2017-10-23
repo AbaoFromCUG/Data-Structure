@@ -287,15 +287,15 @@ background-color: rgb(170, 255, 255);
         <bool>true</bool>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignHCenter|Qt::AlignTop</set>
        </property>
        <widget class="QWidget" name="scrollAreaWidgetContents">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>420</width>
-          <height>257</height>
+          <width>430</width>
+          <height>255</height>
          </rect>
         </property>
        </widget>
@@ -320,6 +320,9 @@ background-color: rgb(170, 255, 255);
     <layout class="QGridLayout" name="gridLayout">
      <property name="leftMargin">
       <number>5</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
      </property>
      <property name="rightMargin">
       <number>5</number>
@@ -437,7 +440,7 @@ background-color: rgb(170, 255, 255);
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>119</height>
+       <height>120</height>
       </size>
      </property>
      <property name="orientation">
