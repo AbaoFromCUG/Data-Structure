@@ -4,16 +4,20 @@
 #include <QWidget>
 #include<QPainter>
 #include<QDebug>
+#include<QFileDialog>
 #include<QClipboard>
 #include<QLabel>
+#include<QStandardPaths>
 #include<QMouseEvent>
 #include<QScrollBar>
 #include<QPixmap>
 #include<math.h>
+#include<tuple>
 #include"lib/framlessHelper/qwidget/framelesshelper.h"
 #include"struct/CharTree.h"
 #include"struct/myQueue.h"
 #include"loghelper.h"
+using namespace std;
 namespace Ui {
 class MainWindow;
 }

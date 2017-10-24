@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     logHelper=new LogHelper(this);
     logHelper->setOutWidget(ui->out_log);
 
-    updatePixmap();
+    initPixmap();
 }
 
 
@@ -92,13 +92,13 @@ void MainWindow::on_btn_front_clicked()
         myTree.getTree(str.toStdString(),1);
     }catch(char* error){
         logHelper->outErr(error);
+        initPixmap();
+        return;
     }catch(...){
         logHelper->outErr("遇到不知名错误");
     }
-    initPixmap();
     logHelper->outLog("前序生成二叉树,输入的序列是"+str);
     updatePixmap();
-
 }
 
 void MainWindow::on_btn_layout_clicked()
@@ -113,6 +113,8 @@ void MainWindow::on_btn_layout_clicked()
         myTree.getTree(str.toStdString(),2);
     }catch(char* error){
         logHelper->outErr(error);
+        initPixmap();
+        return;
     }catch(...){
         logHelper->outErr("遇到不知名错误");
     }
@@ -122,7 +124,18 @@ void MainWindow::on_btn_layout_clicked()
 
 void MainWindow::on_btn_find_clicked()
 {
+    QString findKey=ui->input_key->text();
+    if(findKey.length()!=1){
+        logHelper->outWarm("对不起,只能输入单个字符进行查找");
+        return;
+    }
 
+    auto result=myTree.find(findKey[0].toLatin1());
+    if(get<0>(result)){
+        logHelper->outLog(QString("找到了这个节点,他的祖先节点的序列是:").append(get<1>(result).c_str()));
+    }else{
+        logHelper->outLog("没有找到这个节点");
+    }
 }
 
 void MainWindow::on_btn_swap_clicked()
@@ -138,6 +151,9 @@ void MainWindow::on_btn_refrer_clicked()
 
 void MainWindow::on_btn_saveImg_clicked()
 {
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Image"),QStandardPaths::standardLocations(QStandardPaths::DesktopLocation)[0], tr("Image Files (*.png *.jpg *.bmp)"));
+    pixMap.save(fileName);
 
 }
 
@@ -149,13 +165,10 @@ void MainWindow::initPixmap()
 
 void MainWindow::updatePixmap()
 {
-    pixMap=QPixmap(imgWidth,imgHeight);
+    initPixmap();
     if(!myTree.getRootNode()){
         return;
     }
-    paintSonTree(myTree.getRootNode(),imgWidth/2,0);
-    picLabel->setPixmap(pixMap);
-    return;
     try{
         paintSonTree(myTree.getRootNode(),imgWidth/2,0);
     }catch(const char* str){

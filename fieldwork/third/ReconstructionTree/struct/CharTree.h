@@ -2,6 +2,7 @@
 #include "BinaryTree.h"
 #include "struct/stack.h"
 #include "struct/myQueue.h"
+#include <tuple>
 #include<string>
 #include<iostream>
 #include<QString>
@@ -19,7 +20,7 @@ public:
 
 	void reconstruction(string str1, string str2);  //str1 表示前序输出序列 ，str2 表示中序输出这个序列
 
-	TreeNode<char>* find(char key);		//先简单前序搜索，用栈代替递归
+    tuple<TreeNode<char>*,string> find(char key);		//先简单前序搜索，用栈代替递归
 
     string getFloorOut();
 

@@ -120,11 +120,14 @@ void CharTree::reconstruction(string str1, string str2)  //
     printSelf(1);
 }
 
-TreeNode<char>* CharTree::find(char key)
+tuple<TreeNode<char>*,string> CharTree::find(char key)
 {
 	if (!root) {
-		return nullptr;
+        return make_tuple(nullptr,string());
 	}
+    if(root->data==key){
+        return make_tuple(root,string());
+    }
 	////下面的搜索算法是一种比较便利的前序搜索算法，但是缺点就是不能输出他的祖先节点
 	////是前序搜索
 	//Stack<TreeNode<char>*> s,parent;	
@@ -171,24 +174,14 @@ TreeNode<char>* CharTree::find(char key)
 		nowL = s.top()->lNode;
 		nowR = s.top()->rNode;
 
-		if (nowL&&nowL->data == key) {
+        if ((nowL&&nowL->data == key)||(nowR&&nowR->data == key)) {  //左节点或者右节点是
+            string parentStr;   //返回的所有的父亲节点字符串
 			while (s.top())
 			{
-				cout << s.pop()->data;
-			}
-			cout << endl;
-			return nowL;
-		}
-		if (nowR&&nowR->data == key)
-		{
-			while (s.top())
-			{
-				cout << s.pop()->data;
-			}
-			cout << endl;
-			return nowR;
-		}
-		
+                parentStr+=s.pop()->data;
+            }
+            return make_tuple(nowL&&nowL->data==key?nowL:nowR,parentStr);
+        }
 
 		if (nowL)
 		{
@@ -206,13 +199,14 @@ TreeNode<char>* CharTree::find(char key)
 				//一直弹到某个节点存在右边节点
 				//这里一定要理清楚关系，不然是坑
 				TreeNode<char>* n = s.pop();
-				while (n&&s.top()->rNode == n)
+                while (s.top()&&s.top()->rNode == n||((s.top())&&!s.top()->rNode))
 				{
-					TreeNode<char>* n = s.pop();
+                    //TreeNode<char>* n = s.pop();
+                    n = s.pop();
 				}
-				if (!n)
+                if (!s.top())
 				{
-					return nullptr;
+                    return make_tuple(nullptr,string());
 				}
 				s.push(s.top()->rNode);
 			}
@@ -223,7 +217,7 @@ TreeNode<char>* CharTree::find(char key)
 
 
 	}
-	return nullptr;
+    return make_tuple(nullptr,string());
 	
 
 }

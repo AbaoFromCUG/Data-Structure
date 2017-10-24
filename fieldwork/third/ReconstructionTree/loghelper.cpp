@@ -27,12 +27,12 @@ QString LogHelper::stringToHtml(QString str, QColor crl)
 
 void LogHelper::outLog(QString message)
 {
-    outWidget->append(stringToHtml(QString(">Log: %1").arg(message),QColor(Qt::green)));
+    outWidget->append(stringToHtml(QString(">Log: %1").arg(message),QColor(Qt::black)));
 }
 
 void LogHelper::outWarm(QString message)
 {
-    outWidget->append(stringToHtml(QString(">Warm: %1").arg(message),QColor(Qt::yellow)));
+    outWidget->append(stringToHtml(QString(">Warm: %1").arg(message),QColor(Qt::blue)));
 }
 
 void LogHelper::outErr(QString message)
