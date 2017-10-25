@@ -115,9 +115,9 @@ void CharTree::printSelf(int model)
 
 void CharTree::reconstruction(string str1, string str2)  //
 {
-	clear();
-    root=reconSonTree(str1.c_str(),str2.c_str());
-    printSelf(1);
+    clear();
+    tempStr = str1;
+    root = reconSonTree(str2);
 }
 
 tuple<TreeNode<char>*,string> CharTree::find(char key)
@@ -222,24 +222,38 @@ tuple<TreeNode<char>*,string> CharTree::find(char key)
 
 }
 
-string CharTree::getFloorOut()
-{
-    return string();
 
+SuperList<string> CharTree::splitString(string str, char key)
+{
+    if (str.empty()||key=='\0')
+    {
+        return SuperList<string>();
+    }
+    int first=str.find(key);
+    string s1 = str.substr(0, first);
+    string s2 = str.substr(first + 1, str.size());
+    SuperList<string> list;
+    list.append(s1);
+    list.append(s2);
+
+    return list;
 }
 
 
-TreeNode<char> *CharTree::reconSonTree(QString str1, QString str2)
+
+TreeNode<char>* CharTree::reconSonTree(string str1)
 {
-    if(str1.isEmpty())
-        return nullptr;
-    QStringList list=str2.split(str1[0]);
-    TreeNode<char>* node=new TreeNode<char>(str1[0].toLatin1());
-    if(!list.at(0).isEmpty()){
-        node->lNode=reconSonTree(str1.mid(1),list.at(0));
+    TreeNode<char>* node = new TreeNode<char>(tempStr[0]);
+    SuperList<string> ss = splitString(str1, tempStr[0]);
+    tempStr = tempStr.substr(1, tempStr.size());
+    if (!ss.getFirst()->date.empty())
+    {
+        node->lNode = reconSonTree(ss.getFirst()->date);
     }
-    if(list.length()==2&&!list.at(1).isEmpty()){
-        node->rNode=reconSonTree(str1.mid(1),list.at(1));
+    if (!ss.getLast()->date.empty())
+    {
+        node->rNode = reconSonTree(ss.getLast()->date);
     }
     return node;
+
 }
