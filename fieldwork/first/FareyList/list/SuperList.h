@@ -25,6 +25,7 @@ class SuperList
 {
 public:
 	SuperList();
+	SuperList(SuperList<T>& list);
 	virtual ~SuperList();
 	bool prepend(T t);		//在头上插入
 	bool append(T t);		//在尾部追加
@@ -60,6 +61,21 @@ inline SuperList<T>::SuperList()
 	first = new ListNode<T>;
 	last = first;
 	size = 0;
+}
+
+template<typename T>
+inline SuperList<T>::SuperList(SuperList<T>& list)
+{
+	first = new ListNode<T>();
+	size = list.getSize();
+	ListNode<T>*workNode = list.getFirst();
+	last=first;
+	while (workNode)
+	{
+		last->link = new ListNode<T>(workNode->date);
+		last = last->link;
+		workNode = workNode->link;
+	}
 }
 
 template<typename T>
