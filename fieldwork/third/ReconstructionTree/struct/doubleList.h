@@ -1,5 +1,4 @@
 ﻿#pragma once
-//单向链表
 template<typename T>
 struct DListNode {
 	T date;
