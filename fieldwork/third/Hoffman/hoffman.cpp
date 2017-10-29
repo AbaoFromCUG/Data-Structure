@@ -107,7 +107,7 @@ void Hoffman::enCodeFile()
     QDataStream outStream(&outFile);
     char readChar[3200];
     QString writeCache;
-    QString enCodeCache;
+    char* enCodeCache;
     while (!inStream.atEnd()) {
         /*
          * 编码环节
@@ -122,13 +122,15 @@ void Hoffman::enCodeFile()
             writeCache.append('0');
         }
         int cacheLength=writeCache.length()/8;
-        int a;
+        uint a;
+        enCodeCache=new char[cacheLength];
         for(int i=0;i<cacheLength;i++){
             a=writeCache.mid(i*8,8).toInt(0,2);
-            enCodeCache.append(a);
+            enCodeCache[i]=a;
         }
-        qDebug()<<enCodeCache.length();
-        enCodeCache.clear();
+        outStream.writeRawData(enCodeCache,cacheLength);
+        //enCodeCache.clear();
+        delete[] enCodeCache;
         writeCache.clear();
     }
     inFile.close();
@@ -138,15 +140,26 @@ void Hoffman::enCodeFile()
 void Hoffman::deCodeFile()
 {
     QFile file(enCodeFileName);
+    QFile deFile(enCodeFileName+".png");
     file.open(QIODevice::ReadOnly);
+    deFile.open(QIODevice::WriteOnly);
     QDataStream stream(&file);
-    char readChar[32000];
+    QDataStream deStream(&deFile);
+    unsigned char a;
     while (!stream.atEnd()) {
-        int reallLength=stream.readRawData(readChar,32000);
-        for(int i=0;i<reallLength;i++){
-            qDebug()<<readChar[i];
+        stream>>a;
+        QString str=QString::number(a,2);
+        int i;
+        for(i=0;i<256;i++){
+            if(enCodeMap[i]==str){
+                deStream<<(char)i;
+            }
         }
     }
+
+
+
+    deFile.close();
     file.close();
 }
 

@@ -57,7 +57,6 @@ protected:
     void initCountArray();
 
     QString getString();
-
 private:
     QString fileName;
     QString enCodeFileName;

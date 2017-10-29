@@ -88,6 +88,6 @@ void MainWindow::on_pushButton_clicked()
     workman->moveToThread(thread);
     connect(this,SIGNAL(startZip(QString,QString )),workman,SLOT(startZip(QString,QString)));
     thread->start();
-    emit startZip("/home/abao/Desktop/test.pdf","/home/abao/Desktop/test.zip");
+    emit startZip("/home/abao/Desktop/42737475_xl.jpg","/home/abao/Desktop/test.zip");
 
 }
