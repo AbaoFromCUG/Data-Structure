@@ -213,7 +213,7 @@ void MainWindow::paintDirLine(QPoint start, QPoint end)
     start=start+(end-start)/sqrt(QPoint::dotProduct((end-start),(end-start)))*circleR;
     QPainter painter(&pixMap);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
+    painter.setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
 
     double arrow_lenght_ = 10;//箭头长度，一般固定
     double arrow_degrees_ = 0.5;//箭头角度，一般固定
@@ -234,12 +234,10 @@ void MainWindow::paintCircle(QPoint center, QChar c)
     QPainter painter(&pixMap);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setFont(QFont("Arial",fontSize,QFont::Bold,true));
-    painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
+    painter.setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
     painter.drawEllipse(center,circleR,circleR);
     QRect rect(center.x()-circleR,center.y()-circleR,circleR*2,circleR*2);
     painter.drawText(rect,Qt::AlignCenter,c);
-
-
 }
 
 void MainWindow::paintSonTree(TreeNode<char> *node, int x, int l)

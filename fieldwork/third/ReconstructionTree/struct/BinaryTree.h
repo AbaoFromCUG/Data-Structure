@@ -31,7 +31,7 @@ public:
 	bool appendOneNode(TreeNode<T>* parent, T t, Direction dir);
 	bool insertAfter(TreeNode<T>* parent, T t, Direction dir,Direction mvDir);
     //一个用来遍历的函数 1, 代表前序，2代表中序，3代表后序
-    bool doSomeThing(int model,void(*visit)(TreeNode<T> *t));
+    void doSomeThing(int model,void(*visit)(TreeNode<T> *t));
     //一个用来遍历的函数代表层序
     bool doSomeThing(void(*visit)(TreeNode<T> *t,int nfl));
 	void clear(); //清空一个二叉树
@@ -158,10 +158,9 @@ inline bool BinaryTree<T>::insertAfter(TreeNode<T>* parent, T t, Direction dir, 
 }
 
 template<typename T>
-inline bool BinaryTree<T>::doSomeThing(int model, void(*visit)(TreeNode<T>*t))
+inline void BinaryTree<T>::doSomeThing(int model, void(*visit)(TreeNode<T>*t))
 {
-    if(!root)
-        return false;
+    if(!root);
 	tempVisit = visit;
 	if (model == 1) {
 		recursiveDo1(root);
@@ -172,7 +171,6 @@ inline bool BinaryTree<T>::doSomeThing(int model, void(*visit)(TreeNode<T>*t))
 	{
 		recursiveDo3(root);
     }
-    return true;
 }
 
 template<typename T>
