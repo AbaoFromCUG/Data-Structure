@@ -12,7 +12,6 @@
 #include<QFileInfo>
 #include<QFileDialog>
 #include"lib/framlessHelper/qwidget/framelesshelper.h"
-#include"hoffman.h"
 #include<QThread>
 namespace Ui {
 class MainWindow;
@@ -32,8 +31,6 @@ protected:
 
 private slots:
     void on_maximizeButton_clicked();
-
-    void on_pushButton_clicked();
 
 signals:
     void startZip(QString fileName,QString enCodeFileName);

@@ -54,7 +54,7 @@ void CharTree::getTree(string str, int model)
 				}else{
 					//如果当前是往右延伸，方向要变
 					nowP->rNode = new TreeNode<char>(nowC);
-					nowP = nowP->rNode;
+                    nowP = nowP->rNode;
 					nowDir = Direction::Left;
 				}
 			}

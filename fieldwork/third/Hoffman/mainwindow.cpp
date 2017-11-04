@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    setWindowTitle("大数阶乘");
+    setWindowTitle("霍夫曼牌压缩软件");
     initGUI();
 
     FramelessHelper* helper=new FramelessHelper(this);
@@ -39,7 +39,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
-    QImage backgroundImage(QStringLiteral(":/res/background.png"));
+    QImage backgroundImage(QString(":/res/background.png"));
     painter.drawImage(rect(), backgroundImage);
 
     painter.setPen(QColor(255, 205, 65));
@@ -73,21 +73,5 @@ void MainWindow::on_maximizeButton_clicked()
         showFullScreen();
         ui->maximizeButton->setIcon(QIcon(":/res/maximize-button2.png"));
     }
-
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    QThread * thread=new QThread(this);
-    Hoffman* workman=new Hoffman();
-    connect(thread,&QThread::destroyed,workman,&Hoffman::deleteLater);
-    connect(workman,&Hoffman::zipSuccess,[=](){
-        thread->wait();
-        thread->quit();
-    });
-    workman->moveToThread(thread);
-    connect(this,SIGNAL(startZip(QString,QString )),workman,SLOT(startZip(QString,QString)));
-    thread->start();
-    emit startZip("/home/abao/Desktop/42737475_xl.jpg","/home/abao/Desktop/test.zip");
 
 }

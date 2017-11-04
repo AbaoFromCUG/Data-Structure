@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
-    <height>338</height>
+    <width>663</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,7 +75,7 @@ background-color: rgb(170, 255, 255);
 	background-color: rgb(170, 255, 255);
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="20,1,6">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -91,10 +91,13 @@ background-color: rgb(170, 255, 255);
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
      </property>
      <property name="leftMargin">
       <number>0</number>
@@ -264,28 +267,42 @@ background-color: rgb(170, 255, 255);
     </layout>
    </item>
    <item row="1" column="0">
+    <widget class="FileCoverDialog" name="widget" native="true"/>
+   </item>
+   <item row="1" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>307</height>
+       <width>10</width>
+       <height>369</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
+   <item row="1" column="2">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>PushButton</string>
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>FileCoverDialog</class>
+   <extends>QWidget</extends>
+   <header>filecoverdialog.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>

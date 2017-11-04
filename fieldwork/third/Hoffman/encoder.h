@@ -1,13 +1,8 @@
-#ifndef HOFFMAN_H
-#define HOFFMAN_H
-
-#include <QObject>
+#ifndef ENCODER_H
+#define ENCODER_H
 #include<QFile>
-#include<iostream>
-#include<QIODevice>
-#include<QDebug>
-#include<QTextStream>
 #include<QDataStream>
+#include <QObject>
 struct HoffmanNode
 {
     HoffmanNode* parent;
@@ -43,35 +38,31 @@ struct HoffmanNode
         }
     }
 };
-
-class Hoffman : public QObject
+class EnCoder : public QObject
 {
     Q_OBJECT
 public:
-    explicit Hoffman(QObject *parent = nullptr);
-    ~Hoffman();
+    explicit EnCoder(QObject *parent = nullptr);
+
 
 signals:
-    void zipSuccess();
+    void signal_enCoder(int status);
 
 public slots:
-    void startZip(QString fileName,QString enCodeFileName);
-    void startUnZip(QString enCodeFileName,QString fileName);
+    void enCodeFile(QString fromName,QString toName);
 protected:
-    void count();
-    void makeTree();
-
-    void enCodeFile();
-    void deCodeFile();
+    void count();       //一次读入1024000
+    void makeMap();
     void initCountArray();
-    QString getString();
-    unsigned char toUChar( const QString& str) ;
-private:
-    QString fileName;
-    QString enCodeFileName;
-    long long countArray[256];
+    void enCode();
+    unsigned char toUChar(const QString& str);
+    QString getMessage();     //序列化
+protected:
+    qint64 countArray[256];
     QString enCodeMap[256];
-    HoffmanNode* root;
+    QString m_fromName;
+    QString m_toName;
+
 };
 
-#endif // HOFFMAN_H
+#endif // ENCODER_H

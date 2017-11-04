@@ -8,5 +8,7 @@
         <file>res/close-button2.png</file>
         <file>res/close-button1.png</file>
         <file>res/background.png</file>
+        <file>res/moveBackground.png</file>
+        <file>res/moveBackground2.png</file>
     </qresource>
 </RCC>
