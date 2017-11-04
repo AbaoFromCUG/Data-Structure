@@ -207,6 +207,8 @@ void MainWindow::on_btnRefresh_clicked()
 
 void MainWindow::on_btnDraw_clicked()
 {
+    //前序列  ABCDEGF
+    //中序列  CBEGDFA
     QString str1=ui->input1->toPlainText();
     QString str2=ui->input2->toPlainText();
     str1.remove(QRegExp("\\s"));  //过滤所有的空白符号
@@ -216,6 +218,7 @@ void MainWindow::on_btnDraw_clicked()
     }
     try{
         myTree.reconstruction(str1.toStdString(),str2.toStdString());
+        logHelper->outLog(QString("你输入的前序序列:%1,中序序列:%2构建成功").arg(str1).arg(str2));
     }catch(const char* str){
         logHelper->outWarm(str);
         return;

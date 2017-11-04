@@ -1,50 +1,41 @@
-#include "hoffman.h"
+#include "decoder.h"
 
-Hoffman::Hoffman(QObject *parent) : QObject(parent)
+DeCoder::DeCoder(QObject *parent) : QObject(parent)
 {
 
 }
 
-Hoffman::~Hoffman()
+void DeCoder::deCodeFile(QString fromName)
 {
-    if(root)
-        delete root;
-}
-
-void Hoffman::startZip(QString fileName,QString enCodeFileName)
-{
-    this->fileName=fileName;
-    this->enCodeFileName=enCodeFileName;
-    count();
+    m_fromName=fromName;
+    getToName();
+    signal_deCoder(0);
     makeTree();
-    enCodeFile();
-    deCodeFile();
-    emit zipSuccess();
-}
-
-void Hoffman::startUnZip(QString enCodeFileName, QString fileName)
-{
+    signal_deCoder(2);
+    deCode();
+    signal_deCoder(3);
 
 }
 
-
-void Hoffman::count()
+void DeCoder::getToName()
 {
-    initCountArray();
-    QFile file(fileName);
+    QFile file(m_fromName);
     file.open(QIODevice::ReadOnly);
-    QDataStream stream(&file);
-    unsigned char readChar[1024000];
-    while (!stream.atEnd()) {
-        qint64 reallLength=stream.readRawData((char*)readChar,1024000);
-        for(qint64 i=0;i<reallLength;i++){
-            countArray[readChar[i]]++;
-        }
+    QDataStream inStream(&file);
+    QString str;
+    inStream>>str;
+
+    str=str.mid(0,str.length()-1);
+    QStringList list=str.split('#');
+
+    m_toName=QFileInfo(list[1]).path()+"/hoff_"+QFileInfo(list[1]).fileName();
+    for(int i=0;i<256;i++){
+        countArray[i]=list[2+i].toDouble();
     }
-    file.close();
 }
 
-void Hoffman::makeTree()
+
+void DeCoder::makeTree()
 {
     HoffmanNode* store[256];
     HoffmanNode* list[256];
@@ -85,89 +76,24 @@ void Hoffman::makeTree()
             root=list[num1];
             break;
         }
-        if(num1==num2){
-            qDebug()<<"Error";
-        }
         list[num1]=new HoffmanNode(list[num1]->weight+list[num2]->weight,list[num1],list[num2]);
         list[num2]=0;
     }
 
-
-    for(int i=0;i<256;i++){
-        HoffmanNode* node=store[i];
-        while (node&&node->parent) {
-            if(node->parent->right==node){
-                /*
-                 * 如果当前节点位于父节点的右边节点,
-                 * 那么就在
-                 */
-                enCodeMap[i].insert(0,"1");
-            }else {
-                enCodeMap[i].insert(0,"0");
-            }
-            node=node->parent;
-        }
-        if(node!=root){
-            qDebug()<<"kfjdlksf";
-        }
-    }
 }
 
-void Hoffman::enCodeFile()
+void DeCoder::deCode()
 {
     qint64 allLength=0;
-    QFile inFile(fileName);
-    QFile outFile(enCodeFileName);
-    inFile.open(QIODevice::ReadOnly);
-    outFile.open(QIODevice::WriteOnly);
-    QDataStream inStream(&inFile);
-    QDataStream outStream(&outFile);
-    unsigned char readChar[1024000];
-    QString readCache;
-    unsigned char* writeCache;
-    while (!inStream.atEnd()) {
-        /*
-         * 编码环节
-         * 一次读入1024000个字符,然后再写入
-         */
-        int reallLength=inStream.readRawData((char*)readChar,1024000);
-        allLength+=reallLength;
-        for(int i=0;i<reallLength;i++){
-            readCache.append(enCodeMap[(unsigned char)readChar[i]]);
-        }
-
-        if(inStream.atEnd()){
-            //当读进文件缓存时候时读完了
-            //收尾处理
-            while(readCache.length()%8!=0)
-                readCache.append('0');
-        }
-        qint64 cacheLength=readCache.length()/8;
-        writeCache=new unsigned char[cacheLength];
-        unsigned char a;
-        qint64 i;
-        for(i=0;i<cacheLength;i++){
-            writeCache[i]=toUChar(readCache.mid(i*8,8));
-        }
-        outStream.writeRawData((char*)writeCache,cacheLength);
-        readCache=readCache.mid(i*8);
-        delete[] writeCache;
-    }
-    qDebug()<<allLength;
-    inFile.close();
-    outFile.close();
-
-}
-
-void Hoffman::deCodeFile()
-{
-    qint64 allLength=0;
-    QFile inFile(enCodeFileName);
-    QFile deFile(enCodeFileName+".jpg");
+    QFile inFile(m_fromName);
+    QFile deFile(m_toName);
     inFile.open(QIODevice::ReadOnly);
     deFile.open(QIODevice::WriteOnly);
     QDataStream inStream(&inFile);
     QDataStream deStream(&deFile);
+    QString header;
+    inStream>>header;  //刷掉前面的头部信息
+
 
     unsigned char readChar[1024000];
     QString readCache;
@@ -207,7 +133,6 @@ void Hoffman::deCodeFile()
             for(int i=0;i<writeCache.length();i++){
                 l[i]=writeCache.at(i).toLatin1();
             }
-            qDebug()<<allLength+writeCache.length();
             deStream.writeRawData((char*)l,writeCache.length());
             deFile.close();
             inFile.close();
@@ -251,46 +176,4 @@ void Hoffman::deCodeFile()
 
 
 
-}
-
-void Hoffman::initCountArray()
-{
-
-    for(int i=0;i<256;i++){
-        countArray[i]=0;
-    }
-}
-
-
-
-QString Hoffman::getString()
-{
-    QString result;
-    for(int i=0;i<256;i++){
-        result.append(enCodeMap[i]);
-        result.append("#");
-    }
-    int strLen=256*8;
-    while (result.length()<strLen) {
-        result.append("#");
-    }
-    return result;
-}
-
-unsigned char Hoffman::toUChar(const QString &str)
-{
-    if(str.length()!=8){
-        throw "error";
-    }
-    unsigned char a=0;
-    for(qint64 i=0;i<str.length();i++){
-        if(str.at(i).toLatin1()=='0')
-            a=a<<1;
-        else {
-            a=a<<1;
-            a=a+1;
-        }
-    }
-    //a=a>>1;
-    return a;
 }

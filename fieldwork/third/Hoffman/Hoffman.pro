@@ -27,16 +27,23 @@ SOURCES += \
         main.cpp \
     mainwindow.cpp \
     lib/framlessHelper/qwidget/framelesshelper.cpp \
-    hoffman.cpp
+    encoder.cpp \
+    decoder.cpp \
+    encodedialog.cpp \
+    filecoverdialog.cpp
 
 HEADERS += \
     mainwindow.h \
     lib/framlessHelper/qwidget/framelesshelper.h \
-    hoffman.h
+    encoder.h \
+    decoder.h \
+    encodedialog.h \
+    filecoverdialog.h
 
 FORMS += \
     mainwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    encodedialog.ui
 
 RESOURCES += \
     res.qrc
