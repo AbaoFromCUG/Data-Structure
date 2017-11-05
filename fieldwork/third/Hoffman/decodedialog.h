@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include<QThread>
+#include"lib/framlessHelper/qwidget/framelesshelper.h"
+#include"lib/logHelper/loghelper.h"
 #include"decoder.h"
 namespace Ui {
 class DeCodeDialog;
@@ -16,12 +18,17 @@ public:
     explicit DeCodeDialog(QWidget *parent = 0);
     ~DeCodeDialog();
 
-private slots:
+public slots:
     void on_toolButton_clicked();
     void startWorker(QString fromName);
+    void statusChange(int status,double much);
+signals:
+    void signal_DeCode(QString fromName);
 private:
     Ui::DeCodeDialog *ui;
-    DeCoder* m_deCoder;
+    LogHelper* m_logHelper;
+    FramelessHelper *m_frameHelper;
+
     QThread* m_thread;
 };
 

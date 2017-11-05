@@ -3,6 +3,7 @@
 #include<QFile>
 #include<QDataStream>
 #include<QFileInfo>
+#include<QDebug>
 #include <QObject>
 struct HoffmanNode
 {
@@ -47,17 +48,19 @@ public:
 
 
 signals:
-    void signal_enCoder(int status,int much);
+    void signal_enCoder(int status,double much);
 
 public slots:
     void enCodeFile(QString fromName,QString toName);
+    void enCode();
 protected:
     void count();       //一次读入1024000
     void makeMap();
     void initCountArray();
-    void enCode();
+
     unsigned char toUChar(const QString& str);
     QString getMessage();     //序列化
+
 protected:
     qint64 countArray[256];
     QString enCodeMap[256];

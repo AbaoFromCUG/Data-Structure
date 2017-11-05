@@ -9,11 +9,11 @@ void DeCoder::deCodeFile(QString fromName)
 {
     m_fromName=fromName;
     getToName();
-    signal_deCoder(0);
+    signal_deCoder(0,2);
     makeTree();
-    signal_deCoder(2);
+    signal_deCoder(1,5);
     deCode();
-    signal_deCoder(3);
+    signal_deCoder(3,100);
 
 }
 
@@ -84,6 +84,12 @@ void DeCoder::makeTree()
 
 void DeCoder::deCode()
 {
+    //用于统计工作量的两个数字
+    QFileInfo infor(m_fromName);
+    double countTimes=infor.size()/1024000+1;
+    qint64 countSize=0;
+
+
     qint64 allLength=0;
     QFile inFile(m_fromName);
     QFile deFile(m_toName);
@@ -168,7 +174,8 @@ void DeCoder::deCode()
         allLength+=writeCache.length();
         deStream.writeRawData((char*)l,writeCache.length());
         delete[] l;
-        //deStream<<writeCache;
+        countSize++;
+        emit signal_deCoder(2,countSize/countTimes*100);
 
 
     }

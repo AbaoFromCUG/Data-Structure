@@ -91,13 +91,16 @@ void MainWindow::getFile(QString fileName)
     case QMessageBox::Yes:
     {
         EnCodeDialog* dialog=new EnCodeDialog(this);
-        dialog->exec();
+        dialog->open();
+        dialog->startEnCoder(fileName);
+
         break;
     }
     case QMessageBox::No:
     {
         DeCodeDialog* dialog=new DeCodeDialog(this);
-        dialog->exec();
+        dialog->open();
+        dialog->startWorker(fileName);
         break;
     }
     case QMessageBox::Cancel:

@@ -16,7 +16,7 @@ public:
     explicit DeCoder(QObject *parent = nullptr);
 
 signals:
-    void signal_deCoder(int status);
+    void signal_deCoder(int status,double much);
 
 public slots:
     void deCodeFile(QString fromName);

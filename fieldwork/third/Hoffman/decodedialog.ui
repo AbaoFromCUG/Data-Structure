@@ -234,7 +234,7 @@ background-color: rgb(170, 255, 255);
      <item>
       <widget class="QProgressBar" name="progressBar">
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
