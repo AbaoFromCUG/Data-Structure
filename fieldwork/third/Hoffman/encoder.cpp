@@ -12,11 +12,11 @@ void EnCoder::enCodeFile(QString fromName, QString toName)
     this->m_fromName=fromName;
     this->m_toName=toName;
     count();
-    emit signal_enCoder(0);
+    emit signal_enCoder(0,2);
     makeMap();
-    emit signal_enCoder(1);
+    emit signal_enCoder(1,5);
     enCode();
-    emit signal_enCoder(2);
+    emit signal_enCoder(3,100);
 }
 
 void EnCoder::count()
@@ -111,6 +111,9 @@ void EnCoder::initCountArray()
 
 void EnCoder::enCode()
 {
+    QFileInfo infor(m_fromName);
+    double_t countTimes=infor.size()/10240000+1;
+    qint64 countSize=0;
     QFile inFile(m_fromName);
     QFile outFile(m_toName);
     inFile.open(QIODevice::ReadOnly);
@@ -118,7 +121,7 @@ void EnCoder::enCode()
     QDataStream inStream(&inFile);
     QDataStream outStream(&outFile);
     outStream<<getMessage();    //将文件信息放入其中
-    unsigned char readChar[1024000];
+    unsigned char readChar[10240000];
     QString readCache;
     unsigned char* writeCache;
     while (!inStream.atEnd()) {
@@ -126,7 +129,8 @@ void EnCoder::enCode()
          * 编码环节
          * 一次读入1024000个字符,然后再写入
          */
-        int reallLength=inStream.readRawData((char*)readChar,1024000);
+
+        int reallLength=inStream.readRawData((char*)readChar,10240000);
         for(int i=0;i<reallLength;i++){
             readCache.append(enCodeMap[readChar[i]]);
         }
@@ -147,6 +151,8 @@ void EnCoder::enCode()
         outStream.writeRawData((char*)writeCache,cacheLength);
         readCache=readCache.mid(i*8);
         delete[] writeCache;
+        countSize++;
+        emit signal_enCoder(2,countSize/countTimes*100+5);
     }
     inFile.close();
     outFile.close();

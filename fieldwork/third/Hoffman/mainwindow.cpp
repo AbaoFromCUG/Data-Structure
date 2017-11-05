@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include"ui_mainwindow.h"
-
+#include"encodedialog.h"
+#include"decodedialog.h"
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent, Qt::FramelessWindowHint)
     , ui(new Ui::MainWindow())
@@ -9,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle("霍夫曼牌压缩软件");
     initGUI();
+    connect(ui->fileWidget,FileCoverDialog::signal_getFile,this,MainWindow::getFile);
 
     FramelessHelper* helper=new FramelessHelper(this);
     helper->activateOn(this);  //激活当前窗体
@@ -28,6 +30,7 @@ void MainWindow::initGUI()
 {
 
     ui->maximizeButton->setIcon(QIcon(":/res/maximize-button1.png"));
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -74,4 +77,35 @@ void MainWindow::on_maximizeButton_clicked()
         ui->maximizeButton->setIcon(QIcon(":/res/maximize-button2.png"));
     }
 
+}
+
+void MainWindow::getFile(QString fileName)
+{
+
+    int ret=QMessageBox::question(this,
+                          tr("choose"),
+                          tr("请选择进行压缩还是解压，yes代表压缩，No代表解压"),
+                          QMessageBox::Yes | QMessageBox::No|QMessageBox::Cancel,
+                          QMessageBox::Cancel);
+    switch (ret) {
+    case QMessageBox::Yes:
+    {
+        EnCodeDialog* dialog=new EnCodeDialog(this);
+        dialog->exec();
+        break;
+    }
+    case QMessageBox::No:
+    {
+        DeCodeDialog* dialog=new DeCodeDialog(this);
+        dialog->exec();
+        break;
+    }
+    case QMessageBox::Cancel:
+    {
+        break;
+    }
+    default:
+        break;
+    }
+    QTimer::singleShot(0,ui->fileWidget,&FileCoverDialog::setNormalStatus);
 }

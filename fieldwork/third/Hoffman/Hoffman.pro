@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+CONFIG += c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Hoffman
@@ -30,7 +30,9 @@ SOURCES += \
     encoder.cpp \
     decoder.cpp \
     encodedialog.cpp \
-    filecoverdialog.cpp
+    filecoverdialog.cpp \
+    lib/logHelper/loghelper.cpp \
+    decodedialog.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -38,12 +40,15 @@ HEADERS += \
     encoder.h \
     decoder.h \
     encodedialog.h \
-    filecoverdialog.h
+    filecoverdialog.h \
+    lib/logHelper/loghelper.h \
+    decodedialog.h
 
 FORMS += \
     mainwindow.ui \
     mainwindow.ui \
-    encodedialog.ui
+    encodedialog.ui \
+    decodedialog.ui
 
 RESOURCES += \
     res.qrc

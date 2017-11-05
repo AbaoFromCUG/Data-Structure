@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QWidget" name="MainWindow">
+ <class>DeCodeDialog</class>
+ <widget class="QWidget" name="DeCodeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>663</width>
-    <height>400</height>
+    <width>615</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,7 +75,7 @@ background-color: rgb(170, 255, 255);
 	background-color: rgb(170, 255, 255);
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnstretch="20,1,6">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -91,7 +91,7 @@ background-color: rgb(170, 255, 255);
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0" colspan="3">
+   <item row="0" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
@@ -136,7 +136,7 @@ background-color: rgb(170, 255, 255);
         <string notr="true">font: 75 12pt &quot;文泉驿等宽正黑&quot;;</string>
        </property>
        <property name="text">
-        <string>霍夫曼压缩、解压全能王</string>
+        <string>解压</string>
        </property>
       </widget>
      </item>
@@ -191,43 +191,6 @@ background-color: rgb(170, 255, 255);
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="maximizeButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>45</width>
-         <height>26</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>45</width>
-         <height>26</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="contextMenuPolicy">
-        <enum>Qt::NoContextMenu</enum>
-       </property>
-       <property name="toolTip">
-        <string>Maximize</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>34</width>
-         <height>26</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="closeButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -266,57 +229,72 @@ background-color: rgb(170, 255, 255);
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="FileCoverDialog" name="fileWidget" native="true">
-     <property name="acceptDrops">
-      <bool>true</bool>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2"/>
-    </widget>
+   <item row="1" column="0" rowspan="2" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancle">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy; /* make the default button prominent */
+}</string>
+       </property>
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer">
+   <item row="2" column="1" rowspan="2">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>10</width>
-       <height>369</height>
+       <width>575</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="1" column="2">
-    <widget class="QLabel" name="label_2">
-     <property name="styleSheet">
-      <string notr="true">font: 9pt &quot;幼圆&quot;;</string>
-     </property>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="toolButton">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#4d4a42;&quot;&gt;这是一款利用霍夫曼树进行压缩的软件，因为压缩时保存了一定格式的文件信息（比如文件名，编码信息），所以只能解压本压缩软件压缩的文件！！！可以同时开启多个压缩、解压工作。CPU爆炸别怪我啊&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="scaledContents">
-      <bool>false</bool>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+      <string>...</string>
      </property>
     </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QTextBrowser" name="enCodeLog"/>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>FileCoverDialog</class>
-   <extends>QWidget</extends>
-   <header>filecoverdialog.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>
@@ -324,7 +302,7 @@ background-color: rgb(170, 255, 255);
   <connection>
    <sender>closeButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>DeCodeDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -340,7 +318,7 @@ background-color: rgb(170, 255, 255);
   <connection>
    <sender>minimizeButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>DeCodeDialog</receiver>
    <slot>showMinimized()</slot>
    <hints>
     <hint type="sourcelabel">

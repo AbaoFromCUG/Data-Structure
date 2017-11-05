@@ -9,6 +9,8 @@
 #include<QMouseEvent>
 #include<QDebug>
 #include<QFile>
+#include<QMessageBox>
+#include<QTimer>
 #include<QFileInfo>
 #include<QFileDialog>
 #include"lib/framlessHelper/qwidget/framelesshelper.h"
@@ -31,10 +33,9 @@ protected:
 
 private slots:
     void on_maximizeButton_clicked();
+    void getFile(QString fileName);
 
 signals:
-    void startZip(QString fileName,QString enCodeFileName);
-
 
 private:
     Ui::MainWindow* ui;

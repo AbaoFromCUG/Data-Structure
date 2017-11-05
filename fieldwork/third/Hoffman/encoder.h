@@ -2,6 +2,7 @@
 #define ENCODER_H
 #include<QFile>
 #include<QDataStream>
+#include<QFileInfo>
 #include <QObject>
 struct HoffmanNode
 {
@@ -46,7 +47,7 @@ public:
 
 
 signals:
-    void signal_enCoder(int status);
+    void signal_enCoder(int status,int much);
 
 public slots:
     void enCodeFile(QString fromName,QString toName);
