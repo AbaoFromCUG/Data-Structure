@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>305</height>
+    <width>556</width>
+    <height>353</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -75,23 +75,8 @@ background-color: rgb(170, 255, 255);
 	background-color: rgb(170, 255, 255);
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0" colspan="2">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
@@ -120,7 +105,7 @@ background-color: rgb(170, 255, 255);
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>:/img/res/dog.jpg</pixmap>
+        <pixmap resource="res.qrc">:/img/res/dog.jpg</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -133,7 +118,7 @@ background-color: rgb(170, 255, 255);
         <string notr="true">font: 10pt &quot;华康方圆体W7(P)&quot;;</string>
        </property>
        <property name="text">
-        <string>法雷序列</string>
+        <string>第二题目:村庄修路</string>
        </property>
       </widget>
      </item>
@@ -263,191 +248,77 @@ background-color: rgb(170, 255, 255);
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="1" column="0" rowspan="3">
+    <widget class="QScrollArea" name="mapArea">
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>217</width>
-       <height>20</height>
-      </size>
+     <property name="widgetResizable">
+      <bool>true</bool>
      </property>
-    </spacer>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>328</width>
+        <height>299</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>246</width>
-       <height>52</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QRadioButton" name="FirstDepth">
-       <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;幼圆&quot;;</string>
-       </property>
-       <property name="text">
-        <string>深度优先</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="FirstBreadth">
-       <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;幼圆&quot;;</string>
-       </property>
-       <property name="text">
-        <string>广度优先</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="Iteration">
-       <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;幼圆&quot;;</string>
-       </property>
-       <property name="text">
-        <string>循环迭代</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="3" column="1">
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="rightMargin">
-          <number>6</number>
-         </property>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="num"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="numLab">
-           <property name="styleSheet">
-            <string notr="true">font: 10pt &quot;华康方圆体W7(P)&quot;;</string>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Number&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="fileBtn">
-           <property name="styleSheet">
-            <string notr="true">font: 25 12pt &quot;华康方圆体W7(P)&quot;;
-border-radius: 10px;</string>
-           </property>
-           <property name="text">
-            <string>选择保存的文件</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="fileName">
-           <property name="styleSheet">
-            <string notr="true">font: 10pt &quot;华康方圆体W7(P)&quot;;</string>
-           </property>
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="startBtn">
-           <property name="styleSheet">
-            <string notr="true">font: 25 20pt &quot;华康方圆体W7(P)&quot;;</string>
-           </property>
-           <property name="text">
-            <string>开始</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="time1">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="time2">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="time3">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="4" column="1">
+   <item row="1" column="1" rowspan="3">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>246</width>
-       <height>51</height>
+       <width>20</width>
+       <height>298</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="styleSheet">
+      <string notr="true">font: 75 14pt &quot;Droid Sans Fallback&quot;;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;村庄修路问题:实在是看不出UI做成什么样子比较好&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="pushButton">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(186, 189, 182);</string>
+     </property>
+     <property name="text">
+      <string>开始绘制</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>108</height>
       </size>
      </property>
     </spacer>
