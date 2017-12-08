@@ -44,7 +44,12 @@ public:
     ~KMinTree();
     AMMap<QString> getMinTree();
     int isSet(); //检查联通性
+    void logVset();
+
+
     bool* vset;
+    bool loc(int v1,int v2);
+    bool addMap(int a,int b);
 private:
     AMMap<QString>* result;
 

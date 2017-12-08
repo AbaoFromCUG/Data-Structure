@@ -1,5 +1,6 @@
 #include"kmintree.h"
 #include<QList>
+#include<QDebug>
 KMinTree::KMinTree(int capacity):
     AMMap<QString>(capacity)
 {
@@ -46,11 +47,18 @@ AMMap<QString> KMinTree::getMinTree()
     SNode<MinEdge>* workNode=edges.getFirst();
     while (workNode&&isSet()==-1) {
         MinEdge a=workNode->date;
-        vset[a.index1*this->m_iNodeCount+a.index2]=true;
-        vset[a.index2*this->m_iNodeCount+a.index1]=true;
+        int index1=a.index1;
+        int index2=a.index2;
+        vset[index1*this->m_iNodeCount+index2]=true;
+        vset[index2*this->m_iNodeCount+index1]=true;
+        for(int t=0;t<this->m_iNodeCount;t++){
+            if(vset[])
+        }
         r[a.index1].append(a);
         r[a.index2].append(a.getT());
         workNode=workNode->link;
+        logVset();
+        qDebug()<<endl;
     }
     int i=isSet();
 
@@ -69,4 +77,29 @@ int KMinTree::isSet()
         }
     }
     return -1;
+}
+
+void KMinTree::logVset()
+{
+    for(int i=0;i<7;i++){
+        qDebug()<<vset[i*this->m_iNodeCount+0]<<\
+                  vset[i*this->m_iNodeCount+1]<<\
+                  vset[i*this->m_iNodeCount+2]<<\
+                  vset[i*this->m_iNodeCount+3]<<\
+                  vset[i*this->m_iNodeCount+4]<<\
+                  vset[i*this->m_iNodeCount+5]<<\
+                  vset[i*this->m_iNodeCount+6];
+    }
+}
+
+bool KMinTree::loc(int v1, int v2)
+{
+    return vset[v1*this->m_iNodeCount+v2];
+}
+
+bool KMinTree::addMap(int a, int b)
+{
+    if(loc(a,b)){
+
+    }
 }
