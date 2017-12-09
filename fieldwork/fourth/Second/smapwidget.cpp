@@ -1,5 +1,5 @@
 #include "smapwidget.h"
-
+#include<QTimer>
 SMapWidget::SMapWidget(QWidget *parent) :
     QWidget(parent)
   ,m_map(7)
@@ -43,7 +43,6 @@ SMapWidget::SMapWidget(QWidget *parent) :
 
     this->m_minMap=new AMMap<QString>(this->m_map.getMinTree());
     initPointMap();
-
 }
 
 SMapWidget::~SMapWidget()
@@ -73,19 +72,34 @@ void SMapWidget::initPointMap()
     m_pointMap[4]=QPoint(300,600);
     m_pointMap[5]=QPoint(500,50);
     m_pointMap[6]=QPoint(500,450);
+
+
+    m_chart=new QCharts();
+    m_scatter=new QScatterSeries();
 }
 
 void SMapWidget::drawRect(QString str, QPoint p)
 {
     QPainter painter(this);
-    painter.setPen(Qt::green);
+    painter.setPen(Qt::black);
+    QFont font = painter.font();
+    font.setPixelSize(20);
+    painter.setFont(font);
     painter.setBrush(QBrush(QColor(237, 212, 0),Qt::SolidPattern));//设置画刷形式
-    painter.drawRect(QRect(p.x()-this->m_rectW/2,p.y()-this->m_rectH/2,this->m_rectW,this->m_rectH));
+    QRect rect(p.x()-this->m_rectW/2,p.y()-this->m_rectH/2,this->m_rectW,this->m_rectH);
+    painter.drawEllipse(rect);
+    painter.drawText(rect, Qt::AlignCenter,str);
     painter.end();
+
 }
 
 void SMapWidget::startPaint()
 {
+    //    QTimer::s
 
-    m_status=1;
+}
+
+void SMapWidget::timerEvent(QTimerEvent *event)
+{
+
 }

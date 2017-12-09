@@ -1,11 +1,9 @@
 #include"kmintree.h"
-#include<QList>
+#include<QVector>
 #include<QDebug>
 KMinTree::KMinTree(int capacity):
     AMMap<QString>(capacity)
 {
-    result=nullptr;
-    vset=nullptr;
 }
 
 
@@ -14,13 +12,6 @@ KMinTree::KMinTree(int capacity):
 
 KMinTree::~KMinTree()
 {
-    if(vset){
-        delete vset;
-        vset=nullptr;
-    }
-    if(result){
-        delete result;
-    }
 
 }
 
@@ -28,78 +19,100 @@ KMinTree::~KMinTree()
 
 AMMap<QString> KMinTree::getMinTree()
 {
-    vset=new bool[this->m_iNodeCount*this->m_iNodeCount];   //用来检测两个点之间是否连通
-    for(int i=0;i<this->m_iNodeCount*this->m_iNodeCount;i++){
-        vset[i]=false;
-    }
+    //申请容量为节点数的作为结果树
     AMMap<QString> result(this->m_iNodeCount);
     //先把所有的边存到集合里
     SList<MinEdge> edges;
-    SList<MinEdge> r[7];
+    QVector<QVector<int>> nodeVec;
     for(int i=0;i<this->m_iNodeCount;i++){
+        result.addNode(this->getValue(i));
         for(int j=0;j<i;j++){
             if(this->edge(i,j)!=INT32_MAX){
                 edges.append(MinEdge(i,j,this->edge(i,j)));
             }
         }
     }
+    //用自己写的排序函数将边集排序
     edges.sort(true);
-    SNode<MinEdge>* workNode=edges.getFirst();
-    while (workNode&&isSet()==-1) {
-        MinEdge a=workNode->date;
-        int index1=a.index1;
-        int index2=a.index2;
-        vset[index1*this->m_iNodeCount+index2]=true;
-        vset[index2*this->m_iNodeCount+index1]=true;
-        for(int t=0;t<this->m_iNodeCount;t++){
-            if(vset[])
-        }
-        r[a.index1].append(a);
-        r[a.index2].append(a.getT());
-        workNode=workNode->link;
-        logVset();
-        qDebug()<<endl;
-    }
-    int i=isSet();
 
+    SNode<MinEdge>* workNode=edges.getFirst();
+    while (workNode&&result.NumberOfEdges()!=this->m_iNodeCount-1) {
+        MinEdge a=workNode->date;
+        int nodeAInSetIndex=-1;
+        int nodeBInSetIndex=-1;
+        for(int i=0;i<nodeVec.size();i++){
+            for(int j=0;j<nodeVec[i].size();j++){
+                if(nodeVec[i][j]==a.index1){
+                    nodeAInSetIndex=i;
+                }
+                if(nodeVec[i][j]==a.index2){
+                    nodeBInSetIndex=i;
+                }
+            }
+        }
+        if(nodeAInSetIndex==-1){
+            if(nodeBInSetIndex==-1){
+                QVector<int> vec;
+                vec.append(a.index1);
+                vec.append(a.index2);
+                nodeVec.append(vec);
+            }else {
+                nodeVec[nodeBInSetIndex].append(nodeAInSetIndex);
+            }
+        }else {
+            if(nodeBInSetIndex==-1){
+                nodeVec[nodeAInSetIndex].append(nodeBInSetIndex);
+            }else {
+                //如果两个点在同的集合里
+                if(nodeAInSetIndex==nodeBInSetIndex){
+                    //如果已经在同一个集合里，也就是说，会形成环形
+                    workNode=workNode->link;
+                    continue;
+                }else{
+                //，那么就把这两个集合合并
+                nodeVec[nodeAInSetIndex]+=nodeVec[nodeBInSetIndex];
+                nodeVec.removeAt(nodeBInSetIndex);
+                }
+            }
+        }
+        result.insertEdge(a.index1,a.index2,a.weight);
+        workNode=workNode->link;
+    }
     return result;
 }
 
-int KMinTree::isSet()
-{
-    for(int i=0;i<this->m_iNodeCount;i++){
-        bool a=true;
-        for(int j=0;j<this->m_iNodeCount;j++){
-            a=a&&vset[this->m_iCapacity*i+j];
-        }
-        if(a){
-            return i;
-        }
-    }
-    return -1;
-}
 
-void KMinTree::logVset()
-{
-    for(int i=0;i<7;i++){
-        qDebug()<<vset[i*this->m_iNodeCount+0]<<\
-                  vset[i*this->m_iNodeCount+1]<<\
-                  vset[i*this->m_iNodeCount+2]<<\
-                  vset[i*this->m_iNodeCount+3]<<\
-                  vset[i*this->m_iNodeCount+4]<<\
-                  vset[i*this->m_iNodeCount+5]<<\
-                  vset[i*this->m_iNodeCount+6];
-    }
-}
 
-bool KMinTree::loc(int v1, int v2)
-{
-    return vset[v1*this->m_iNodeCount+v2];
-}
+//void KMinTree::logVset()
+//{
+//    for(int i=0;i<7;i++){
+//        qDebug()<<vset[i*this->m_iNodeCount+0]<<\
+//                  vset[i*this->m_iNodeCount+1]<<\
+//                  vset[i*this->m_iNodeCount+2]<<\
+//                  vset[i*this->m_iNodeCount+3]<<\
+//                  vset[i*this->m_iNodeCount+4]<<\
+//                  vset[i*this->m_iNodeCount+5]<<\
+//                  vset[i*this->m_iNodeCount+6];
+//    }
+//}
 
-bool KMinTree::addMap(int a, int b)
-{
-    if(loc(a,b)){
-
-    }
-}
+//bool KMinTree::addMap(int a, int b)
+//{
+//    //增加一条新的边的时候
+//    //也就是说，a
+//    for(int i=0;i<this->m_iNodeCount;i++){
+//        if(loc(a,i)){
+//            //也就是说，i任何与a联通的量，都会与b联通
+//            if(!loc(i,b)){
+//                setV(i,b);
+//                addMap(i,b);
+//            }
+//        }
+//        if(loc(b,i)){
+//            if(!loc(i,a)){
+//                setV(i,a);
+//                addMap(i,a);
+//            }
+//        }
+//    }
+//}
