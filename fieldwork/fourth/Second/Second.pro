@@ -32,7 +32,6 @@ SOURCES += \
     lib/framlessHelper/qwidget/framelesshelper.cpp \
     lib/logHelper/loghelper.cpp \
     lib/struct/cammap.cpp \
-    smapwidget.cpp \
     lib/struct/kmintree.cpp
 
 HEADERS += \
@@ -49,9 +48,7 @@ HEADERS += \
     lib/struct/undir_admap.h \
     lib/struct/undir_admmap.h \
     lib/struct/vmap.h \
-    smapwidget.h \
     lib/struct/kmintree.h \
-    lib/struct/kmintree.h
 
 RESOURCES += \
     res.qrc

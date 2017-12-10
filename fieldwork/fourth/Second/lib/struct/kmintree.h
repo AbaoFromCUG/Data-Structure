@@ -41,9 +41,10 @@ class KMinTree:public AMMap<QString>
 {
 public:
     KMinTree(int capacity);
+    KMinTree(const AMMap<QString>& old);
     ~KMinTree();
     AMMap<QString> getMinTree();
-
+    QList<MinEdge> getEdge();
 
     bool loc(int v1,int v2);
 private:

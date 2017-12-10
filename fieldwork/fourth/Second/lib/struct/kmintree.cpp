@@ -4,6 +4,13 @@
 KMinTree::KMinTree(int capacity):
     AMMap<QString>(capacity)
 {
+    this->setTMap(MapType::undirMap);
+}
+
+KMinTree::KMinTree(const AMMap<QString> &old):
+    AMMap<QString>(old)
+{
+
 }
 
 
@@ -57,11 +64,11 @@ AMMap<QString> KMinTree::getMinTree()
                 vec.append(a.index2);
                 nodeVec.append(vec);
             }else {
-                nodeVec[nodeBInSetIndex].append(nodeAInSetIndex);
+                nodeVec[nodeBInSetIndex].append(a.index1);
             }
         }else {
             if(nodeBInSetIndex==-1){
-                nodeVec[nodeAInSetIndex].append(nodeBInSetIndex);
+                nodeVec[nodeAInSetIndex].append(a.index2);
             }else {
                 //如果两个点在同的集合里
                 if(nodeAInSetIndex==nodeBInSetIndex){
@@ -79,6 +86,19 @@ AMMap<QString> KMinTree::getMinTree()
         workNode=workNode->link;
     }
     return result;
+}
+
+QList<MinEdge> KMinTree::getEdge()
+{
+    QList<MinEdge> a;
+    for(int i=0;i<this->m_iNodeCount;i++){
+        for(int j=0;j<i;j++){
+            if(this->edge(i,j)!=INT32_MAX){
+                a.append(MinEdge(i,j,this->edge(i,j)));
+            }
+        }
+    }
+    return a;
 }
 
 
