@@ -130,7 +130,7 @@ background-color: rgb(170, 255, 255);
      <item>
       <widget class="QLabel" name="label">
        <property name="styleSheet">
-        <string notr="true">font: 10pt &quot;华康方圆体W7(P)&quot;;</string>
+        <string notr="true">font: 18pt &quot;华文行楷&quot;;</string>
        </property>
        <property name="text">
         <string>第二题目:村庄修路</string>
@@ -310,7 +310,7 @@ background-color: rgb(170, 255, 255);
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">font: 75 12pt &quot;Droid Sans Fallback&quot;;</string>
+        <string notr="true">font: 14pt &quot;等线&quot;;</string>
        </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;村庄修路问题:实在是看不出UI做成什么样子比较好&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -329,7 +329,7 @@ background-color: rgb(170, 255, 255);
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-color: rgb(186, 189, 182);</string>
+        <string notr="true">font: 14pt &quot;华文行楷&quot;;</string>
        </property>
        <property name="text">
         <string>开始绘制</string>
@@ -344,6 +344,9 @@ background-color: rgb(170, 255, 255);
          <height>50</height>
         </size>
        </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;华文行楷&quot;;</string>
+       </property>
        <property name="text">
         <string>初始化图像</string>
        </property>
@@ -356,6 +359,9 @@ background-color: rgb(170, 255, 255);
          <width>0</width>
          <height>50</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 14pt &quot;华文行楷&quot;;</string>
        </property>
        <property name="text">
         <string>保存图像</string>
