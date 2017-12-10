@@ -4,6 +4,10 @@
 #include<QPainter>
 #include<QPaintEvent>
 #include<QMouseEvent>
+#include<QGraphicsScene>
+#include<QStandardPaths>
+#include<QFileDialog>
+#include<QGraphicsItem>
 namespace Ui {
 class MainWindow;
 }
@@ -23,8 +27,12 @@ private slots:
     void on_maximizeButton_clicked();
 
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene* m_scene;
+
 
 
 };

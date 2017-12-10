@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
-    <height>305</height>
+    <width>508</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -91,7 +91,7 @@ background-color: rgb(170, 255, 255);
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
       <number>0</number>
@@ -267,7 +267,10 @@ background-color: rgb(170, 255, 255);
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="1" column="0" rowspan="3">
+    <widget class="QGraphicsView" name="graphicsView"/>
+   </item>
+   <item row="1" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -275,7 +278,27 @@ background-color: rgb(170, 255, 255);
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>274</height>
+       <height>93</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>198</height>
       </size>
      </property>
     </spacer>

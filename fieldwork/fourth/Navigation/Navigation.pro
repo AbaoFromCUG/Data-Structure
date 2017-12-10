@@ -50,3 +50,5 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
+
+
