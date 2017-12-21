@@ -17,12 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     helper->setRubberBandOnMove(false);  //设置橡皮筋效果-可移动
     helper->setRubberBandOnResize(false);  //设置橡皮筋效果-可缩放
 
+    connect(ui->refresh,&QPushButton::clicked,ui->graphicsView,&MGraphicsView::refresh);
 
-    //我的逻辑代码
-    m_scene=new QGraphicsScene(this);
-
-    ui->graphicsView->setScene(m_scene);
-    m_scene->addText("Text");
 
 }
 
@@ -46,7 +42,6 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.setBrush(QBrush(QColor(50, 177, 122),Qt::SolidPattern));//设置画刷形式
     painter.drawRect(0,0,this->width(),26);
     painter.end();
-
 }
 
 void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
@@ -64,6 +59,12 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 }
 
+void MainWindow::refresh()
+{
+
+
+}
+
 
 void MainWindow::on_maximizeButton_clicked()
 {
@@ -74,13 +75,30 @@ void MainWindow::on_maximizeButton_clicked()
         showFullScreen();
         ui->maximizeButton->setIcon(QIcon(":/img/res/maximize-button2.png"));
     }
-
 }
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                tr("Open Image"),QStandardPaths::standardLocations(QStandardPaths::DesktopLocation)[0], tr("Image Files (*.png *.jpg *.tif)"));
-    QImage img(fileName);
-    m_scene->addPixmap(QPixmap::fromImage(img));
+//    QString fileName = QFileDialog::getOpenFileName(this,
+//                tr("Open Image"),QStandardPaths::standardLocations(QStandardPaths::DesktopLocation)[0], tr("Image Files (*.png *.jpg *.tif)"));
+//    QImage img(fileName);
+}
+
+
+
+
+void MainWindow::on_findWay_clicked()
+{
+
+}
+
+void MainWindow::on_refresh_clicked()
+{
+    MapProfileReader* reader=MapProfileReader::getInstance();
+    QList<ViewPoint> ps=reader->getAllPoint();
+    for(auto i :ps){
+        ui->end->addItem(i.name);
+        ui->start->addItem(i.name);
+    }
+
 }

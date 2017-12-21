@@ -8,6 +8,7 @@
         <file>res/close-button2.png</file>
         <file>res/close-button1.png</file>
         <file>res/background.png</file>
-        <file>res/cug.tif</file>
+        <file>res/map.bmp</file>
+        <file>res/cug.png</file>
     </qresource>
 </RCC>

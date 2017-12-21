@@ -8,6 +8,7 @@
 #include<QStandardPaths>
 #include<QFileDialog>
 #include<QGraphicsItem>
+#include"mapprofilereader.h"
 namespace Ui {
 class MainWindow;
 }
@@ -23,15 +24,24 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
 
     QString getLogTime();
+    void refresh();
 private slots:
     void on_maximizeButton_clicked();
 
 
     void on_pushButton_clicked();
 
+
+    void on_findWay_clicked();
+
+    void on_refresh_clicked();
+
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene* m_scene;
+
+signals:
+
+
 
 
 

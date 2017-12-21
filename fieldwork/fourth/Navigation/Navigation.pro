@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT += xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Navigation
@@ -28,7 +28,11 @@ SOURCES += \
     lib/framlessHelper/qwidget/framelesshelper.cpp \
     lib/logHelper/loghelper.cpp \
     lib/struct/cammap.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mgraphicsview.cpp \
+    addpointdialog.cpp \
+    mapprofilereader.cpp \
+    lib/maphelper.cpp
 
 HEADERS += \
     lib/framlessHelper/qwidget/framelesshelper.h \
@@ -43,10 +47,15 @@ HEADERS += \
     lib/struct/undir_admap.h \
     lib/struct/undir_admmap.h \
     lib/struct/vmap.h \
-    mainwindow.h
+    mainwindow.h \
+    mgraphicsview.h \
+    addpointdialog.h \
+    mapprofilereader.h \
+    lib/maphelper.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    addpointdialog.ui
 
 RESOURCES += \
     res.qrc
