@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>586</width>
+    <height>417</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTextEdit" name="textEdit">
+      <property name="placeholderText">
+       <string>在此编辑，粘贴，打开JSON</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QStackedWidget" name="pageList">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="treePage">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QTreeWidget" name="tree_json">
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
+ QTreeView::item:hover{background-color:rgb(0,255,0,50)} 
+QTreeView::item:selected{background-color:rgb(255,0,0,100)}
+QTreeView::item{
+height:30px
+}</string>
+          </property>
+          <property name="autoScroll">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pathTree">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <widget class="QTextEdit" name="path_json">
+        <property name="geometry">
+         <rect>
+          <x>3</x>
+          <y>19</y>
+          <width>261</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>请输入JSONPath</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="formatPage">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <widget class="QTextEdit" name="format_json">
+        <property name="geometry">
+         <rect>
+          <x>3</x>
+          <y>9</y>
+          <width>261</width>
+          <height>351</height>
+         </rect>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>格式化后的字符串</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>586</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="action_newFile"/>
+    <addaction name="action_openFile"/>
+    <addaction name="action_saveFile"/>
+    <addaction name="action_otherSaveFile"/>
+   </widget>
+   <widget class="QMenu" name="menu_tool">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="action_openBash"/>
+    <addaction name="action_beautifulJSON"/>
+    <addaction name="action_JSONPath"/>
+    <addaction name="action_JSONTree"/>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="action_helpJSONDoc"/>
+    <addaction name="action_helpUse"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_tool"/>
+   <addaction name="menu_help"/>
+  </widget>
+  <action name="action_newFile">
+   <property name="text">
+    <string>新建JSON文件</string>
+   </property>
+  </action>
+  <action name="action_openFile">
+   <property name="text">
+    <string>打开JSON文件</string>
+   </property>
+  </action>
+  <action name="action_openBash">
+   <property name="text">
+    <string>打开命令行工具</string>
+   </property>
+  </action>
+  <action name="action_beautifulJSON">
+   <property name="text">
+    <string>格式化JSON</string>
+   </property>
+  </action>
+  <action name="action_helpJSONDoc">
+   <property name="text">
+    <string>JSON文档帮助</string>
+   </property>
+  </action>
+  <action name="action_helpUse">
+   <property name="text">
+    <string>使用帮助</string>
+   </property>
+  </action>
+  <action name="action_otherSaveFile">
+   <property name="text">
+    <string>另存</string>
+   </property>
+  </action>
+  <action name="action_saveFile">
+   <property name="text">
+    <string>保存</string>
+   </property>
+   <property name="statusTip">
+    <string>Ctrl + S</string>
+   </property>
+  </action>
+  <action name="action_JSONPath">
+   <property name="text">
+    <string>JSONPath</string>
+   </property>
+  </action>
+  <action name="action_JSONTree">
+   <property name="text">
+    <string>JSONTree</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
