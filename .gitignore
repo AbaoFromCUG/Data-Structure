@@ -243,3 +243,8 @@ _Pvt_Extensions
 ## qt project
 build-*-Debug/
 build-*-Release
+
+## python project
+__pycache__
+.idea
+
